@@ -1,10 +1,3 @@
-- [English version](#org1456b93)
-    - [Version Française](#org816013d)
-    - [Credits](#orgf0ff096)
-
-
-<a id="org1456b93"></a>
-
 # English version
 
 This repo contains the material associated to the paper "Willingness-To-Pay for Reshuffling Geographical Indications" under revision in the *Journal of Wine Economics*. Raw data from the experimental protocol are on the [Inrae dataverse server](https://data.inrae.fr/dataset.xhtml?persistentId=doi:XXX).
@@ -16,14 +9,10 @@ You will find here :
 -   The details regarding [experimental procedure](./ENprotocol.pdf)
 
 
-<a id="org816013d"></a>
-
 # Version Française
 
 *à venir*, [ici le protocole expérimental](./FRprotocole.pdf)
 
-
-<a id="orgf0ff096"></a>
 
 # Credits
 

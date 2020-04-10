@@ -1,10 +1,9 @@
 #+TITLE:        Willingness-To-Pay for Reshuffling Geographical Indications
 #+AUTHOR:       Jean-Sauveur Ay\\ [[mailto:jsay.site@gmail.com][jsay@inrae.fr]]
-#+OPTIONS:      LaTeX:t tags:nil toc:nil H:5
+#+OPTIONS:      LaTeX:t tags:nil toc:nil
 #+LaTeX_CLASS:  ManueStat
 #+LANGUAGE:     en
 #+STARTUP:      hideblocks
-#+INFOJS_OPT:   view:t toc:t ltoc:t mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js
 #+HTML_HEAD:    <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-light.min.css" />
 #+DRAWERS:      PROPERTIES BABEL BIND LATEX MACRO
 :BABEL:
@@ -22,10 +21,6 @@
 #+LaTeX_HEADER: \usepackage{tabularx, rotating, booktabs, lscape, tikz, dcolumn, amssymb, amsmath, amsthm, bbm, eurosym, threeparttable,pdflscape, txfonts, rotfloat}
 #+LaTeX_HEADER: \usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric, decorations.pathreplacing,decorations.pathmorphing,shapes, matrix,shapes.symbols}
 #+LaTeX_HEADER: \newcolumntype{Y}{>{\raggedleft\arraybackslash}X} \usepackage{caption} \captionsetup{font={stretch=.7}, position=top} \newcommand{\indep}{\;\rotatebox[origin=c]{90}{$\models$}\;}
-:END:
-:MACRO:
-#+MACRO:         ffc @@latex: \superfullcite{$1}@@
-#+MACRO:         flc @@latex: \alert{\ding{220}}@@
 :END:
 
 * README
