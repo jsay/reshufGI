@@ -1,0 +1,2474 @@
+#+TITLE:        Willingness-To-Pay for Reshuffling Geographical Indications
+#+AUTHOR:       Jean-Sauveur Ay\\ [[mailto:jsay.site@gmail.com][jsay@inrae.fr]]
+#+OPTIONS:      LaTeX:t tags:nil toc:nil H:5
+#+LaTeX_CLASS:  ManueStat
+#+LANGUAGE:     en
+#+STARTUP:      hideblocks
+#+INFOJS_OPT:   view:t toc:t ltoc:t mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js
+#+HTML_HEAD:    <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-light.min.css" />
+#+DRAWERS:      PROPERTIES BABEL BIND LATEX MACRO
+:BABEL:
+#+PROPERTY:     header-args :session *R* :exports both :eval no :results output
+:END:
+:BIND:
+#+BIND:         org-latex-image-default-width ""
+#+BIND:         org-latex-tables-booktabs t
+:END:
+:LATEX:
+#+LaTex_CLASS:  ManueStat
+#+LaTeX_HEADER: \parindent 20pt \parskip 1ex  
+#+COLUMNS:      %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+LaTeX_HEADER: \usepackage[utf8]{inputenc} \usepackage[flushleft]{threeparttable} \newcommand\crule[3][black]{\textcolor{#1}{\rule{#2}{#3}}}
+#+LaTeX_HEADER: \usepackage{tabularx, rotating, booktabs, lscape, tikz, dcolumn, amssymb, amsmath, amsthm, bbm, eurosym, threeparttable,pdflscape, txfonts, rotfloat}
+#+LaTeX_HEADER: \usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric, decorations.pathreplacing,decorations.pathmorphing,shapes, matrix,shapes.symbols}
+#+LaTeX_HEADER: \newcolumntype{Y}{>{\raggedleft\arraybackslash}X} \usepackage{caption} \captionsetup{font={stretch=.7}, position=top} \newcommand{\indep}{\;\rotatebox[origin=c]{90}{$\models$}\;}
+:END:
+:MACRO:
+#+MACRO:         ffc @@latex: \superfullcite{$1}@@
+#+MACRO:         flc @@latex: \alert{\ding{220}}@@
+:END:
+
+* README
+  :PROPERTIES:
+  :EXPORT_FILE_NAME: README
+  :END:
+*** English version
+
+    This repo contains the material associated to the paper
+    "Willingness-To-Pay for Reshuffling Geographical Indications"
+    under revision in the /Journal of Wine Economics/.  Raw data from
+    the experimental protocol are on the [[https://data.inrae.fr/dataset.xhtml?persistentId=doi:XXX][Inrae dataverse server]].
+
+    You will find here :
+    - The last [[file:WPfin.pdf][working paper]] and [[file:WPsoi.pdf][online appendix]]
+    - The replication material in [[file:Replication.pdf][PDF]] and [[file:Replication.md][Markdown]]
+    - The details regarding [[./ENprotocol.pdf][experimental procedure]]
+
+*** Version Française
+
+    /à venir/, [[./FRprotocole.pdf][ici le protocole expérimental]]
+
+*** Credits
+
+    Bug reports, comments and suggestions by opening an issue on
+    [[https://github.com/jsay/reshufGI/issues][GitHub]] (preferred) or [[mailto:jsay@inrae.fr][sending an email]].
+    
+    Made on =emacs= with =org-mode= to juggle with =R=, =LaTex= and
+    =Markdown=.
+
+    Special thanks to my co-authors [[https://www.dijon.inrae.fr/cesaer/membres/monia-saidi/][Monia Saïdi]], [[https://www.versailles-grignon.inrae.fr/economie_publique_eng/PersonalPages2/Stephan-Marette][Stephan Marette]], and
+    [[https://www.researchgate.net/profile/Christophe_Martin][Christophe Martin]] for their contribution to this work.
+
+    Licence GNU GPL V3, copyright and licence notices must be
+    preserved (see https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+* Replication
+  :PROPERTIES:
+  :EXPORT_FILE_NAME:    Replication
+  :EXPORT_LATEX_CLASS:  ManueStat
+  :EXPORT_OPTIONS:      TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc toc:nil H:3
+  :EXPORT_TITLE:        @@latex: \huge Willingness-To-Pay for Reshuffling\\ Geographical Indications \vspace{1cm}@@
+  :EXPORT_DATE:         @@latex: Replication Material V2.1, \today @@ 
+  :EXPORT_AUTHOR:       @@latex:\begin{tabular}{ccc} Monia SAÏDI\footnote{UMR CESAER : AgroSup Dijon, INRAE, Univ. Bourgogne Franche-Comté, F-21000 Dijon.} &\hspace*{1.5cm}& Jean-Sauveur AY$^*$ \\  \url{monia.saidi@inrae.fr} && \url{jean-sauveur.ay@inrae.fr} \\ &&\\ Stéphan MARETTE\footnote{UMR ECOPUB : AgroParisTech, INRAE, Univ. Paris Saclay, F-75000 Paris.} && Christophe MARTIN\footnote{UMR CSGA : CNRS, INRAE, Univ. Bourgogne Franche-Comté, F-21000 Dijon.}\\ \url{stephan.marette@inrae.fr} && \url{christophe.martin@inrae.fr}\\ &&\end{tabular}@@
+  :EXPORT_LATEX_HEADER: \newcommand{\verbatimfont}[1]{\renewcommand{\verbatim@font}{\ttfamily#1}} \usepackage[T1]{fontenc}\usepackage{tabularx, rotating, booktabs, lscape, tikz, dcolumn, amssymb, amsmath, amsthm, bbm, eurosym, threeparttable, pdflscape, txfonts, rotfloat}  \usepackage{tocloft} \usepackage[toc]{multitoc}\renewcommand*{\multicolumntoc}{2}\setlength{\columnseprule}{.5pt}\setlength{\columnsep}{1cm}
+  :END:
+** Abstract                                  :noheading:
+#+begin_export html
+---
+title:  Willingness-To-Pay for Reshuffling Geographical Indications
+author: Monia Saïdi, Jean-Sauveur Ay, Stephan Marette, Christophe Martin
+---
+
+# Abstract
+#+end_export
+#+BEGIN_abstract
+This file contents the Replication Material (RM) associated to the
+article named in the title and under revision in the /Journal of Wine
+Economics/.  Data, code, figures and tables are under the copyright
+license GNU GPL V3, which means that license notices must be
+preserved.  Raw data are available from the Inrae dataverse server
+[[https://doi.org/10.15454/ZZWQMN][https://data.inrae.fr]].  The most recent version of this document and
+the detailed experimental protocol are available from the remote
+repository [[https://github.com/jsay/reshufGI/blob/master/Replication.pdf][https://github.com/jsay/reshufGI]].
+#+END_abstract
+#+TOC: headlines 3
+#+Latex: \clearpage
+** Data preparation
+*** Individual data
+
+    The raw data table comes from the file =Data/WTPraw.csv= that
+    contains 125 rows (one row for each participant) and 37 columns
+    (one for each question/ answer).  The first variable is the ID of
+    the participant, the second variable is the result from the
+    simulation at the beginning of the experiment in order to explain
+    the BDM mechanism, the next 15 variables (between column 3 and
+    column 17) correspond to the declared Willingness-To-Pay (WTP)
+    that were asked for 3 different GI levels (=REG=, =VIL=, and
+    =PCRU=) for each of the 5 different scenarios proposed to each
+    participants.  The last 20 columns corresponds to intermediary
+    questions that could be used to control participants'
+    heterogeneity.  We re-code below the names of the WTPs variables
+    to melt them and obtain a pooled data table of 1875 rows and 3
+    columns.
+
+#+begin_src R :wrap example
+library(data.table)
+dim(DT1 <- fread("Data/WTPraw.csv"))
+names(DT1)[ 3: 17] <- paste0("X", substr(names(DT1)[ 3: 17], 2, 5))
+dim(LDT1 <- melt(DT1, id.vars= "ID", measure.vars= names(DT1)[ 3: 17],
+                 variable.name= "CHOIX", value.name= "WTP"))
+LDT1$IDST <- paste(substr(LDT1$ID, 1, 3),
+                   substr(LDT1$CHOIX, 1, 2), sep= "")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+data.table 1.11.4  Latest news: http://r-datatable.com
+
+[1] 125  37
+
+[1] 1875    3
+#+end_example
+
+*** Scenario data
+
+    We also use the file =Data/SCCraw.csv= about the characteristics
+    of the scenario of GI changes that we propose to the participants.
+    We perform 10 group sessions with 5 scenarios on each, so the data
+    have 50 rows.  Every scenarios is replicated on average 4 times,
+    as we have 14 different scenario about of GI changes on the area
+    of /Marsannay/.  The variable =STRUCT= reports 28 unique values
+    because the 14 scenarios are present with and without the bottle
+    of /Fixin Premier Cru/, each appear twice.  We merge the scenario
+    characteristics with previous WTP data.
+
+#+begin_src R :wrap example
+dim(SCC <- fread("Data/SCCraw.csv"))
+length(unique(SCC$STRUCT))
+SCC$IDST <- paste0(substr(SCC$GROUPE, 1, 3), "X", substr(SCC$GROUPE, 5, 5))
+dim(DatPool <- merge(LDT1, SCC[, -1], by= "IDST"))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+[1] 50  2
+
+[1] 28
+
+[1] 1875    5
+#+end_example
+
+*** AOC variables
+
+    We compute 3 series of variables that are used in the
+    regressions.  The first series is about the GI variables that are
+    both coded as =factor= in the =AOC= variable and as =dummies= in
+    the =AOCREG=, =AOCVIL=, and =AOCPCR= variables.  Next, we compute
+    the number of wine bottle in each GI for each scenario for the
+    =STRUCT= variable from scenarios characteristics.  Finally, we
+    code the =FIXIN= dummy variable that equals to 1 for participant
+    for which the /Fixin Premier Cru/ was present.  The code below
+    reports the distribution of dummy variables.
+
+#+begin_src R :wrap example
+DatPool$AOC <- factor(substr(DatPool$CHOIX, 3, 5),
+                      levels= c("REG", "VIL", "PCR"))
+DatPool$AOCREG <- ifelse(DatPool$AOC== "REG", 1, 0)
+DatPool$AOCVIL <- ifelse(DatPool$AOC== "VIL", 1, 0)
+DatPool$AOCPCR <- ifelse(DatPool$AOC== "PCR", 1, 0)
+DatPool$NBREG <- as.numeric(substr(DatPool$STRUCT, 5, 5))
+DatPool$NBVIL <- as.numeric(substr(DatPool$STRUCT, 3, 3))
+DatPool$NBPCR <- as.numeric(substr(DatPool$STRUCT, 1, 1))
+DatPool$FIXIN <- ifelse(rowSums(DatPool[, 10: 12])== 11, 1, 0)
+sapply(DatPool[, c(7: 9, 13)], table, simplify= TRUE)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+  AOCREG AOCVIL AOCPCR FIXIN
+0   1250   1250   1250   900
+1    625    625    625   975
+#+end_example
+
+*** Wine dummies
+
+    We report the code to compute the wine dummies in each scenario.
+    We can verify that the code is good by the reported distribution:
+    each wine is proposed 625 times (except /Fixin Premier Cru/ that
+    is only for 60% of participants).
+
+#+begin_src R :wrap example
+DatPool$VIN0 <- ifelse(DatPool$FIXIN== 1 & DatPool$AOC== "PCR", 1, 0)
+DatPool$VIN1 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 2 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 1 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 1 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 0 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN2 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 3 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 2 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 2 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 1 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN3 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 4 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 3 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 3 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 2 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN4 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 5 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 4 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 4 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 3 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN5 <- ifelse(DatPool$AOC== "VIL", 1, 0)
+DatPool$VIN6 <- ifelse(DatPool$AOC== "VIL", 1, 0)
+DatPool$VIN7 <- ifelse(DatPool$NBREG>= 4 & DatPool$AOC== "REG", 1,
+                ifelse(DatPool$NBREG<  4 & DatPool$AOC== "VIL", 1, 0))
+DatPool$VIN8 <- ifelse(DatPool$NBREG>= 3 & DatPool$AOC== "REG", 1,
+                ifelse(DatPool$NBREG<  3 & DatPool$AOC== "VIL", 1, 0))
+DatPool$VIN9 <- ifelse(DatPool$NBREG== 1,
+                ifelse(DatPool$AOC== "VIL", 1, 0),
+                ifelse(DatPool$AOC== "REG", 1, 0))
+DatPool$VIN10<- ifelse(DatPool$AOC== "REG", 1, 0)
+sapply(DatPool[, 14: 24], table)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+  VIN0 VIN1 VIN2 VIN3 VIN4 VIN5 VIN6 VIN7 VIN8 VIN9 VIN10
+0 1550 1250 1250 1250 1250 1250 1250 1250 1250 1250  1250
+1  325  625  625  625  625  625  625  625  625  625   625
+#+end_example
+
+#+Latex: \clearpage
+
+*** Average score
+
+    To compute the average score corresponding to each GI, we make the
+    analysis for each GIs and then aggregate.
+
+#+begin_src R :wrap example
+DatPool$REGscr <- ifelse(DatPool$NBREG== 1, 0,
+                  ifelse(DatPool$NBREG== 2, .5,
+                  ifelse(DatPool$NBREG== 3, 1, 1.5)))
+DatPool$VILscr <- ifelse(DatPool$NBREG== 1,
+                   ifelse(DatPool$NBVIL== 6, 3.5, 3),
+                  ifelse(DatPool$NBREG== 2,
+                   ifelse(DatPool$NBVIL== 4, 3.5,
+                   ifelse(DatPool$NBVIL== 5, 4, 4.5)),
+                  ifelse(DatPool$NBREG== 3,
+                   ifelse(DatPool$NBVIL== 3, 4,      
+                   ifelse(DatPool$NBVIL== 4, 4.5,
+                   ifelse(DatPool$NBVIL== 5, 5, 5.5))),
+                   ifelse(DatPool$NBVIL== 3, 5,
+                   ifelse(DatPool$NBVIL== 4, 5.5,
+                   ifelse(DatPool$NBVIL== 5, 6,
+                   ifelse(DatPool$NBVIL== 6, 6.5, 4.5)))))))
+DatPool$PCRscr <- ifelse(DatPool$FIXIN== 1,
+                  ifelse(DatPool$NBPCR== 1, 10,
+                  ifelse(DatPool$NBPCR== 2, 9.5,
+                  ifelse(DatPool$NBPCR== 3, 9,
+                  ifelse(DatPool$NBPCR== 4, 8.5,
+                  ifelse(DatPool$NBPCR== 5, 8, 8))))),
+                  ifelse(DatPool$NBPCR== 1, 9,
+                  ifelse(DatPool$NBPCR== 2, 8.5,
+                  ifelse(DatPool$NBPCR== 3, 8,
+                  ifelse(DatPool$NBPCR== 4, 7.5, 7.5)))))
+DatPool$MEAN <- ifelse(DatPool$AOC== "PCR", DatPool$PCRscr,
+                ifelse(DatPool$AOC== "VIL", DatPool$VILscr,
+                       DatPool$REGscr))
+sapply(DatPool[, 25: 28], summary)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+        REGscr VILscr PCRscr   MEAN
+Min.     0.000  3.000  7.500  0.000
+1st Qu.  1.000  4.500  8.000  1.500
+Median   1.500  5.000  8.500  5.000
+Mean     1.102  5.102  8.568  4.924
+3rd Qu.  1.500  6.000  9.000  8.000
+Max.     1.500  6.500 10.000 10.000
+#+end_example
+
+#+Latex: \clearpage
+
+*** Score variance
+
+    In two step, as for the average score.
+
+#+begin_src R :wrap example
+DatPool$REGvar <- ifelse(DatPool$NBREG== 1, 0,
+                  ifelse(DatPool$NBREG== 2, .5,
+                  ifelse(DatPool$NBREG== 3, 1, 1.667)))
+DatPool$VILvar <- ifelse(DatPool$NBVIL== 6, 3.5,
+                  ifelse(DatPool$NBVIL== 5, 2.5,
+                  ifelse(DatPool$NBVIL== 4, 1.667,
+                  ifelse(DatPool$NBVIL== 3, 1, .5))))
+DatPool$PCRvar <- ifelse(DatPool$NBPCR== 1 | DatPool$NBPCR== 0, 0,
+                  ifelse(DatPool$NBPCR== 2, .005,
+                  ifelse(DatPool$NBPCR== 3, .01,
+                  ifelse(DatPool$NBPCR== 4, .01667, .025))))* 100
+DatPool$VAR <- ifelse(DatPool$AOC== "PCR", DatPool$PCRvar,
+               ifelse(DatPool$AOC== "VIL", DatPool$VILvar,
+                       DatPool$REGvar))
+sapply(DatPool[, 29: 32], summary)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+        REGvar VILvar PCRvar   VAR
+Min.     0.000  0.500 0.0000 0.000
+1st Qu.  1.000  1.667 0.0000 0.500
+Median   1.667  2.500 1.0000 1.667
+Mean     1.190  2.430 0.8934 1.504
+3rd Qu.  1.667  3.500 1.6670 1.667
+Max.     1.667  3.500 2.5000 3.500
+#+end_example
+
+#+Latex: \clearpage
+
+*** Summary Table
+
+#+begin_src R :wrap example
+DatPool$WTPreg <- ifelse(DatPool$AOC== "REG", DatPool$WTP, NA)
+DatPool$WTPvil <- ifelse(DatPool$AOC== "VIL", DatPool$WTP, NA)
+DatPool$WTPpcr <- ifelse(DatPool$AOC== "PCR", DatPool$WTP, NA)
+
+DatPool$SCRreg <- ifelse(DatPool$AOC== "REG", DatPool$MEAN, NA)
+DatPool$SCRvil <- ifelse(DatPool$AOC== "VIL", DatPool$MEAN, NA)
+DatPool$SCRpcr <- ifelse(DatPool$AOC== "PCR", DatPool$MEAN, NA)
+
+DatPool$VARreg <- ifelse(DatPool$AOC== "REG", DatPool$VAR, NA)
+DatPool$VARvil <- ifelse(DatPool$AOC== "VIL", DatPool$VAR, NA)
+DatPool$VARpcr <- ifelse(DatPool$AOC== "PCR", DatPool$VAR, NA)
+
+library(stargazer)
+## stargazer(DatPool[, c("WTP", "WTPreg", "WTPvil", "WTPpcr",
+##                       "MEAN", "SCRreg", "SCRvil", "SCRpcr",
+##                       "VAR", "VARreg", "VARvil", "VARpcr")],
+##           type= "html", out= "Tables/TabSumStats.html")
+stargazer(DatPool[, c("WTP", "WTPreg", "WTPvil", "WTPpcr",
+                      "MEAN", "SCRreg", "SCRvil", "SCRpcr",
+                      "VAR", "VARreg", "VARvil", "VARpcr")], type= "text")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+==============================================================
+Statistic   N    Mean  St. Dev.  Min  Pctl(25) Pctl(75)  Max  
+--------------------------------------------------------------
+WTP       1,815 9.644   6.359   0.000  5.500    12.500  42.000
+WTPreg     625  6.765   4.628   0.000  4.000    9.000   38.000
+WTPvil     625  9.480   5.599   0.000  6.000    12.900  37.000
+WTPpcr     565  13.010  7.149   0.000  8.200    17.000  42.000
+MEAN      1,875 4.924   3.159     0     1.5       8       10  
+SCRreg     625  1.102   0.493   0.000  1.000    1.500   1.500 
+SCRvil     625  5.102   1.069   3.000  4.500    6.000   6.500 
+SCRpcr     625  8.568   0.791   7.500  8.000    9.000   10.000
+VAR       1,875 1.504   1.039     0     0.5      1.7      4   
+VARreg     625  1.190   0.565   0.000  1.000    1.667   1.667 
+VARvil     625  2.430   0.966   0.500  1.667    3.500   3.500 
+VARpcr     625  0.893   0.812   0.000  0.000    1.667   2.500 
+--------------------------------------------------------------
+#+end_example
+
+#+LATEX: \clearpage
+
+** Regression analysis
+*** Table 2 of the paper
+
+
+#+begin_src R :wrap example
+library(lfe) ; library(texreg)
+m1 <- felm(WTP~ AOC | 0  | 0 | ID, data= DatPool)
+m2 <- felm(WTP~ AOC | ID | 0 | ID, data= DatPool)
+m3 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9+ VIN10 
+           | 0 | 0 | ID, data= DatPool)
+m4 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9+ VIN10 
+           | ID | 0 | ID, data= DatPool)
+m5 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9+ AOC 
+           | 0 | 0 | ID, data= DatPool)
+m6 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9+ AOC 
+           | ID | 0 | ID, data= DatPool)
+screenreg(list(m1, m2, m3, m4, m5, m6))
+#+end_src
+
+#+Latex: {\footnotesize
+#+RESULTS:
+#+begin_example
+===================================================================================================
+                       Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
+---------------------------------------------------------------------------------------------------
+(Intercept)               6.77 ***                 12.06 ***                  6.63 ***             
+                         (0.41)                    (0.91)                    (0.43)                
+AOCVIL                    2.71 ***     2.71 ***                               2.80 ***     2.80 ***
+                         (0.20)       (0.20)                                 (0.25)       (0.26)   
+AOCPCR                    6.25 ***     6.22 ***                               5.43 ***     5.41 ***
+                         (0.40)       (0.40)                                 (0.78)       (0.55)   
+VIN0                                                1.70         1.73 **      1.70         1.73 ** 
+                                                   (1.26)       (0.61)       (1.26)       (0.61)   
+VIN1                                               -0.14        -0.14        -0.14        -0.14    
+                                                   (0.15)       (0.15)       (0.15)       (0.15)   
+VIN2                                                0.13 *       0.13         0.13 *       0.13    
+                                                   (0.07)       (0.07)       (0.07)       (0.07)   
+VIN3                                                0.02         0.02         0.02         0.02    
+                                                   (0.06)       (0.06)       (0.06)       (0.06)   
+VIN4                                                0.02         0.02         0.02         0.02    
+                                                   (0.07)       (0.07)       (0.07)       (0.07)   
+VIN5                                               -2.63 ***    -2.61 ***                          
+                                                   (0.67)       (0.38)                             
+VIN7                                               -0.04        -0.04        -0.04        -0.04    
+                                                   (0.10)       (0.11)       (0.10)       (0.11)   
+VIN8                                                0.02         0.02         0.02         0.02    
+                                                   (0.11)       (0.12)       (0.11)       (0.12)   
+VIN9                                                0.16         0.16         0.16         0.16    
+                                                   (0.22)       (0.23)       (0.22)       (0.23)   
+VIN10                                              -5.43 ***    -5.41 ***                          
+                                                   (0.78)       (0.55)                             
+---------------------------------------------------------------------------------------------------
+Number  obs.              1815         1815         1815         1815         1815         1815       
+R^2 (full model)          0.16         0.89         0.16         0.89         0.16         0.89    
+R^2 (proj model)          0.16         0.59         0.16         0.60         0.16         0.60
+Adj. R^2 (full model)     0.16         0.88         0.16         0.89         0.16         0.89
+Adj. R^2 (proj model)     0.16         0.56         0.16         0.57         0.16         0.57    
+===================================================================================================
+,*** p < 0.001, ** p < 0.01, * p < 0.05
+#+end_example
+#+LATEX: }\clearpage
+
+*** Table 3 of the paper
+
+#+begin_src R :wrap example
+m1a <- felm(WTP~ MEAN+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
+m1b <- felm(WTP~ MEAN+ VAR+ AOCPCR:VIN0 | ID | 0 | ID, data= DatPool)
+m2a <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0 | 0 | 0 | ID, data= DatPool)
+m2b <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0 | ID | 0 | ID, data= DatPool)
+m3a <- felm(WTP~ AOC+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
+m3b <- felm(WTP~ AOC+ VAR+ AOCPCR:VIN0| ID | 0 |ID, data= DatPool)
+m4a <- felm(WTP~ AOC+ MEAN+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
+m4b <- felm(WTP~ AOC+ MEAN+ VAR+ AOCPCR:VIN0| ID | 0 |ID, data= DatPool)
+## htmlreg(list(m1a, m1b, m2a, m2b, m4a, m4b), file= "Tables/Reg2A.xls",
+##         inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(m1a, m1b, m2a, m2b, m4a, m4b))
+#+end_src
+
+
+#+Latex: {\footnotesize
+#+RESULTS:
+#+begin_example
+===================================================================================================
+                       Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
+---------------------------------------------------------------------------------------------------
+(Intercept)               6.07 ***                  6.41 ***                  6.38 ***             
+                         (0.42)                    (0.41)                    (0.41)                
+MEAN                      0.79 ***     0.79 ***     0.32 ***     0.36 ***     0.32 ***     0.36 ***
+                         (0.05)       (0.05)       (0.09)       (0.05)       (0.09)       (0.05)   
+VAR                      -0.17 ***    -0.18 ***                               0.03         0.02    
+                         (0.05)       (0.04)                                 (0.06)       (0.04)   
+AOCVIL                                              1.44 ***     1.28 ***     1.42 ***     1.27 ***
+                                                   (0.39)       (0.26)       (0.37)       (0.26)   
+AOCPCR                                              2.98 **      2.69 ***     3.02 **      2.72 ***
+                                                   (0.98)       (0.55)       (1.03)       (0.56)   
+AOCPCR:VIN0                                         1.46         1.46 *       1.45         1.46 *  
+                                                   (1.25)       (0.61)       (1.26)       (0.61)   
+---------------------------------------------------------------------------------------------------
+Number  obs.              1815         1815         1815         1815         1815         1815       
+R^2 (full model)          0.16         0.89         0.17         0.90         0.17         0.90    
+R^2 (proj model)          0.16         0.59         0.17         0.61         0.17         0.61
+Adj. R^2 (full model)     0.16         0.88         0.16         0.89         0.16         0.89
+Adj. R^2 (proj model)     0.16         0.56         0.16         0.58         0.16         0.58    
+===================================================================================================
+,*** p < 0.001, ** p < 0.01, * p < 0.05
+#+end_example
+#+LATEX: }\clearpage
+
+*** Table 4 of the paper
+
+#+begin_src R :wrap example
+m3a <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:MEAN+ AOCPCR:VIN0
+            | 0 | 0 | ID, data= DatPool)
+m3b <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:MEAN+ AOCPCR:VIN0
+            | ID | 0 | ID, data= DatPool)
+m4a <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR+ AOCVIL:VAR+ AOCPCR:VAR 
+            | 0 | 0 | ID, data= DatPool)
+m4b <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR+ AOCVIL:VAR+ AOCPCR:VAR 
+            | ID | 0 | ID, data= DatPool)
+maa <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR + AOCVIL:VAR+ AOCPCR:VAR
+            | 0 | 0 | ID, data= DatPool)
+mbb <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR + AOCVIL:VAR+ AOCPCR:VAR
+            | ID | 0 | ID, data= DatPool)
+## htmlreg(list(m3a, m3b, m4a, m4b, maa, mbb), file= "Tables/Reg3A.xls",
+##         inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(m3a, m3b, m4a, m4b, maa, mbb))
+#+end_src
+
+#+Latex: {\footnotesize
+#+RESULTS:
+#+begin_example
+===================================================================================================
+                       Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
+---------------------------------------------------------------------------------------------------
+(Intercept)               6.42 ***                  6.45 ***                  6.19 ***             
+                         (0.47)                    (0.47)                    (0.45)                
+AOCVIL                    1.74 ***     1.74 ***     1.56 ***     1.65 ***     1.88 ***     1.66 ***
+                         (0.35)       (0.37)       (0.33)       (0.36)       (0.43)       (0.43)   
+AOCPCR                    1.43         1.57         4.24 **      3.94 ***     6.17 ***     6.04 ***
+                         (1.02)       (1.00)       (1.42)       (0.64)       (0.80)       (0.60)   
+AOCREG:MEAN               0.31         0.46 **                                4.08         0.06    
+                         (0.24)       (0.16)                                 (3.89)       (2.36)   
+AOCVIL:MEAN               0.26 **      0.29 ***                               0.17         0.23 ***
+                         (0.09)       (0.06)                                 (0.15)       (0.05)   
+AOCPCR:MEAN               0.51 ***     0.51 ***                               0.48 ***     0.47 ***                       
+                         (0.10)       (0.11)                                 (0.11)       (0.10)                          
+AOCPCR:VIN0               1.32         1.35 *       1.65         1.63 **      1.84         1.87 ** 
+                         (1.27)       (0.61)       (1.25)       (0.61)       (1.26)       (0.61)   
+MEAN                                                0.19         0.24 ***                          
+                                                   (0.15)       (0.05)                             
+AOCREG:VAR                                          0.09         0.18        -3.29         0.34    
+                                                   (0.12)       (0.14)       (3.31)       (2.01)   
+AOCVIL:VAR                                          0.21         0.14 *       0.22         0.14 *                       
+                                                   (0.20)       (0.06)       (0.20)       (0.06)                        
+AOCPCR:VAR                                         -0.26        -0.21 *      -0.41 ***    -0.41 ***
+                                                   (0.14)       (0.09)       (0.08)       (0.09)   
+---------------------------------------------------------------------------------------------------
+Number  obs.              1815         1815         1815         1815         1815         1815       
+R^2 (full model)          0.17         0.90         0.17         0.90         0.17         0.90    
+R^2 (proj model)          0.17         0.61         0.17         0.61         0.17         0.61
+Adj. R^2 (full model)     0.16         0.89         0.16         0.89         0.16         0.89
+Adj. R^2 (proj model)     0.16         0.58         0.16         0.58         0.16         0.58    
+===================================================================================================
+,*** p < 0.001, ** p < 0.01, * p < 0.05
+#+end_example
+#+LATEX: }\clearpage
+
+** Figures
+*** Figure 1
+
+#+Name:		Lst:TDB
+#+Header:	:width 7 :height 6
+#+begin_src R :results graphics :file "Figures/TriDistriB.pdf"
+DatPool$SR <- ifelse(DatPool$FIXIN!= 1, DatPool$STRUCT,
+                     paste0(as.numeric(substr(DatPool$STRUCT, 1, 1))- 1,
+                            substr(DatPool$STRUCT, 2, 5)))
+gg <- data.frame(SR= DatPool$SR,
+                 model.matrix(~0+ DatPool$SR)/ 3)
+hh <- aggregate(rep(1/ 3, nrow(gg)), by= list(gg$SR), sum)
+hh <- data.frame(hh, as.numeric(substr(hh$Group.1, 1, 1)),
+                 as.numeric(substr(hh$Group.1, 3, 3)),
+                 as.numeric(substr(hh$Group.1, 5, 5)))
+dpt <- list(as.numeric(hh[1, 3: 5]))
+for (i in 2: nrow(hh)) dpt <- c(dpt, list(as.numeric(hh[i, 3: 5])))
+library(Ternary)
+par(mar= c(0, 0, 2, 0))
+TernaryPlot(alab= '% PREMIER CRU -->', isometric= T,
+            blab= '% VILLAGE -->', clab= '<--  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            main= "",
+            grid.minor.lines= 0, padding= .075)
+Interest <- matrix(c( 40, 20, 40,
+                      40, 60, 00,
+                      00, 60, 40), ncol= 3, byrow= TRUE)
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, hh$x, cex=1.2, font=2)
+#+end_src
+
+#+RESULTS: Lst:TDB
+#+ATTR_LaTeX: :options scale= .5
+[[file:Figures/TriDistriB.pdf]]
+
+#+Latex: \clearpage
+
+*** Figure 2
+
+#+Name:		Lst:TRF2
+#+Header:	:width 11 :height 9
+#+begin_src R :results graphics :file "Figures/TriangleF2.pdf"
+yop <- aggregate(DatPool$WTP,
+                 by= list(DatPool$AOC, DatPool$SR), mean)
+names(yop) <- c("VIN", "SR", "ValP")
+yap1 <- merge(yop[yop$VIN== "PCR", c("SR", "ValP")],
+              yop[yop$VIN== "VIL", c("SR", "ValP")], by= "SR")
+yap2 <- merge(yap1, yop[yop$VIN== "REG", c("SR", "ValP")], by= "SR")
+yap2$PCR <- as.numeric(substr(yap2$SR, 1, 1))
+yap2$VIL <- as.numeric(substr(yap2$SR, 3, 3))
+yap2$REG <- as.numeric(substr(yap2$SR, 5, 5))
+yup <- yap2[order(yap2$REG, yap2$VIL, yap2$PCR), ]
+yup$ValT <- (yup$PCR* yup$ValP.x+
+             yup$VIL* yup$ValP.y+ yup$REG* yap2$ValP)/ 10
+# png(filename= "Figures/TriangleF2.png", 
+#    units="in", width= 11, height= 9, pointsize= 12, res=300)
+library(Ternary)
+par(mfrow= c(2, 2), mar= c(0, 0, 3, 0))
+TernZoom(yup$ValP, "Average WTP for a bottle at Régional level")
+AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
+TernZoom(yup$ValP.y, "AverageWTP of a bottle at Village level")
+AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
+TernZoom(yup$ValP.x, "Average WTP for a bottle at Premier Cru level")
+AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
+TernZoom(yup$ValT, "Average WTP for a average bottle on the area")
+AddToTernary(points, c(0, 50, 50), pch=21, cex=6.5)
+# dev.off()
+#+end_src
+
+#+Name: Fig:TRF2
+#+ATTR_LaTeX: :options scale= .4
+#+RESULTS: Lst:TRF2
+[[file:Figures/TriangleF2.pdf]]
+
+#+Latex: \clearpage
+
+** Appendix
+*** Function for ternary plots
+
+#+begin_src R
+TernZoom <- function(vecteur, lbl= ""){
+    dpt2 <- list(c(0  , 2.5, 7.5), c(2.5, 0  , 7.5),  c(0  , 5  , 5  ),
+                 c(2.5, 2.5, 5  ), c(5  , 0  , 5  ),  c(0  , 7.5, 2.5),
+                 c(2.5, 5  , 2.5), c(5  , 2.5, 2.5),  c(7.5, 0  , 2.5),
+                 c(0  , 10 , 0  ), c(2.5, 7.5, 0  ),  c(5  , 5  , 0  ),
+                 c(7.5, 2.5, 0  ), c(10 , 0 , 0  ))
+    TernaryPlot(alab= ' --> Percent of Premier Cru level --> ',
+                blab= ' --> Percent of Village level --> ', col.lab= "red",
+                clab= ' <-- Percent of Régional level <-- ', grid.lwd= 4,
+                grid.lty='solid', col=rgb(.9, .9, .9), grid.col='white', 
+                axis.col="white", ticks.col= "white", isometric= T,
+                padding= 0.1, main= lbl, grid.minor.lines= 0,
+                grid.line= 4,  axis.labels= F, point= 'down')
+    TernaryLines(list(c(100,   0,   0), c(-10, 115, 0)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c( 75,   0,  25), c(-10, 85, 25)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c( 50,   0,  50), c(-10, 60, 50)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c( 25,   0,  75), c(-10, 35, 75)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c(  0,   0, 100), c(-10, 10,100)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    AddToTernary(text, c(-10, 114, 0), 40, col= "chocolate1")
+    AddToTernary(text, c(-10, 85, 25), 30, col= "chocolate1")
+    AddToTernary(text, c(-10, 60, 50), 20, col= "chocolate1")
+    AddToTernary(text, c(-10, 35, 75), 10, col= "chocolate1")
+    AddToTernary(text, c(-10, 10,100),  0, col= "chocolate1")
+    TernaryLines(list(c(  0,  75,  25), c( 35, 75 , -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0,  50,  50), c( 60, 50, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0,   25,  75), c(85, 25, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0,   0, 100), c(115, 0, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0, 100,  0),  c( 10, 100, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    AddToTernary(text, c(10,100, -10), 20, col= "darkcyan")
+    AddToTernary(text, c(35, 75, -10), 30, col= "darkcyan")
+    AddToTernary(text, c(60, 50, -10), 40, col= "darkcyan")
+    AddToTernary(text, c(85, 25, -10), 50, col= "darkcyan")
+    AddToTernary(text, c(115, 0, -10), 60, col= "darkcyan")
+    TernaryLines(list(c(  0, 100,  0), c( 0, -10, 115)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c( 25,  75, 0), c( 25, -10, 85)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c( 50,  50,  0), c(50, -10, 60)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c( 75,  25, 0), c(75, -10, 35)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c(100,   0, 0), c(100, -10, 9.99)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    AddToTernary(text, c( 0,-10, 115), 40, col= "blueviolet")
+    AddToTernary(text, c(25,-10,  85), 30, col= "blueviolet")
+    AddToTernary(text, c(50,-10,  60), 20, col= "blueviolet")
+    AddToTernary(text, c(75,-10,  35), 10, col= "blueviolet")
+    AddToTernary(text, c(100,-10, 9.99), 0, col= "blueviolet")
+    AddToTernary(points, dpt2, pch= 21, col= 'white', bg= "white", cex=5)
+    AddToTernary(text, dpt2, round(vecteur, 1), cex=1.25, font=2)
+}
+#+end_src
+
+#+RESULTS:
+
+** Code for INAO                             :noexport:
+*** Descriptive stats
+**** Dummy exclusives
+
+#+begin_src R :results output :exports code :file "Tables/StDesData.tex"
+yop <- read.csv("Data/WTPraw.csv", sep= ";")
+yup <- read.csv("Data/FIZraw.csv", sep= ";")
+yup$ID <- paste0(ifelse(nchar(as.character(yup$Groupe))== 3,
+                        as.character(yup$Groupe),
+                        paste0("G0",
+                               substr(as.character(yup$Groupe), 2, 2))),
+                 paste0("C", substr(yup$N..Cabine, 8, 10)))
+CIpFIZ <- merge(yop, yup, by= "ID")
+CIpFIZ$SEXE <- as.character(ifelse(CIpFIZ$Q1== 1, "Masculin", "Féminin"))
+CIpFIZ$AGE  <- 2018- CIpFIZ$Q2
+CIpFIZ$AGEC <- ifelse(CIpFIZ$AGE<= 30                 , "20-30 ans",
+               ifelse(CIpFIZ$AGE> 30 & CIpFIZ$AGE<= 40, "30-40 ans",
+               ifelse(CIpFIZ$AGE> 40 & CIpFIZ$AGE<= 50, "40-50 ans",
+               ifelse(CIpFIZ$AGE> 50 & CIpFIZ$AGE<= 60, "50-60 ans",
+                      "60-90 ans"))))
+CIpFIZ$CSP  <- ifelse(CIpFIZ$Q3== 1, "Agriculteurs",
+               ifelse(CIpFIZ$Q3== 2, "Artisans",
+               ifelse(CIpFIZ$Q3== 3, "Cadres",
+               ifelse(CIpFIZ$Q3== 4, "Prof. interm.",
+               ifelse(CIpFIZ$Q3== 5, "Employés",
+               ifelse(CIpFIZ$Q3== 6, "Ouvriers",
+               ifelse(CIpFIZ$Q3== 7, "Retraités", "Sans activité")))))))
+
+CIpFIZ$REV  <- ifelse(CIpFIZ$Q5== 1, "Moins de 1000 euros",
+               ifelse(CIpFIZ$Q5== 2, "Entre 1000 et 2000 euros",
+               ifelse(CIpFIZ$Q5== 3, "Entre 2000 et 3000 euros",
+               ifelse(CIpFIZ$Q5== 4, "Entre 3000 et 4000 euros",
+               ifelse(CIpFIZ$Q5== 5, "Entre 4000 et 5000 euros",
+               ifelse(CIpFIZ$Q5== 6, "Entre 5000 et 6000 euros",
+                      "Plus de 6000 euros"))))))
+
+CIpFIZ$QTT  <- factor(ifelse(CIpFIZ$Q8== 1, "Moins de 5 bouteilles",
+                      ifelse(CIpFIZ$Q8== 2, "Entre 5 et 10 bouteilles",
+                             "Plus de 10 bouteilles")),
+                      levels= c("Moins de 5 bouteilles",
+                                "Entre 5 et 10 bouteilles",
+                                "Plus de 10 bouteilles"))
+
+CIpFIZ$BGT  <- factor(ifelse(CIpFIZ$Q9== 1, "Inférieur à 20 euros",
+                      ifelse(CIpFIZ$Q9== 2, "Entre 20 et 50 euros",
+                      ifelse(CIpFIZ$Q9== 3, "Entre 50 et 100 euros",
+                             "Plus de 100 euros"))),
+                      levels= c("Inférieur à 20 euros",
+                                "Entre 20 et 50 euros",
+                                "Entre 50 et 100 euros",
+                                "Plus de 100 euros"))
+                      
+library(qwraps2)
+our_summary2 <-
+    with(CIpFIZ,
+         list("Sexe des particiants"            = tab_summary(SEXE),
+              "Age des participants"            = tab_summary(AGEC),
+              "Catégorie Socioprofessionnelle"  = tab_summary(CSP),
+              "Revenu mensuel du foyer"         = tab_summary(REV),
+              "Achat mensuel de vin du foyer"   = tab_summary(QTT),
+              "Budget mensuel en vin du foyer"= tab_summary(BGT)
+              ))
+print(summary_table(CIpFIZ, our_summary2))
+#+end_src
+ 
+#+RESULTS:
+[[file:Tables/StDesData.tex]]
+
+[[file:Tables/TableSDD.tex]]
+
+**** Dummy cumulatives
+
+#+begin_src R :results output :exports code :file "Tables/StDesData2.tex"
+CIpFIZ$A.SP <- 0
+CIpFIZ$A.SP[ grep(pattern = "1", CIpFIZ$Q12)] <- 1
+CIpFIZ$A.CV <- 0
+CIpFIZ$A.CV[ grep(pattern = "2", CIpFIZ$Q12)] <- 1
+CIpFIZ$A.MF <- 0
+CIpFIZ$A.MF[ grep(pattern = "3", CIpFIZ$Q12)] <- 1
+CIpFIZ$A.DR <- 0
+CIpFIZ$A.DR[ grep(pattern = "4", CIpFIZ$Q12)] <- 1
+CIpFIZ$A.HD <- 0
+CIpFIZ$A.HD[ grep(pattern = "5", CIpFIZ$Q12)] <- 1
+CIpFIZ$A.IT <- 0
+CIpFIZ$A.IT[ grep(pattern = "6", CIpFIZ$Q12)] <- 1
+CIpFIZ$A.AT <- 0
+CIpFIZ$A.AT[ grep(pattern = "7", CIpFIZ$Q12)] <- 1
+AA <- cbind(c("Grande et moyenne surface", "Caviste", "Marché, foire",
+              "Vente directe", "Hard-discount", "Internet", "Autre"),
+            apply(CIpFIZ[, 72: 78], 2, function(x)
+                paste0(round(table(x)[ 2]), " ",
+                       "(", round(table(x)[ 2]/ nrow(CIpFIZ)* 100), "%)")))
+
+CIpFIZ$Q.RG <- 0
+CIpFIZ$Q.RG[ grep(pattern = "4", CIpFIZ$Q11bis)] <- 1
+CIpFIZ$Q.VL <- 0
+CIpFIZ$Q.VL[ grep(pattern = "3", CIpFIZ$Q11bis)] <- 1
+CIpFIZ$Q.PC <- 0
+CIpFIZ$Q.PC[ grep(pattern = "2", CIpFIZ$Q11bis)] <- 1
+CIpFIZ$Q.GC <- 0
+CIpFIZ$Q.GC[ grep(pattern = "1", CIpFIZ$Q11bis)] <- 1
+QQ <- cbind(c("Niveau Régional", "Niveau Village",
+              "Niveau Premier Cru", "Niveau Grand Cru"),
+            apply(CIpFIZ[, 79: 82], 2, function(x)
+                paste0(round(table(x)[ 2]), " ",
+                       "(", round(table(x)[ 2]/ nrow(CIpFIZ)* 100), "%)")))
+
+CIpFIZ$CONN <- ifelse(nchar(CIpFIZ$QI01)== 1, paste0("00000", CIpFIZ$QI01),
+               ifelse(nchar(CIpFIZ$QI01)== 2, paste0("0000" , CIpFIZ$QI01),
+               ifelse(nchar(CIpFIZ$QI01)== 3, paste0("000"  , CIpFIZ$QI01),
+               ifelse(nchar(CIpFIZ$QI01)== 4, paste0("00"   , CIpFIZ$QI01),
+               ifelse(nchar(CIpFIZ$QI01)== 5, paste0("0"    , CIpFIZ$QI01),
+                      CIpFIZ$QI01)))))
+CIpFIZ$D.VC <- ifelse(substr(CIpFIZ$CONN, 1, 1)== 1, 1, 0)
+CIpFIZ$D.JF <- ifelse(substr(CIpFIZ$CONN, 2, 2)== 1, 1, 0)
+CIpFIZ$D.CA <- ifelse(substr(CIpFIZ$CONN, 3, 3)== 1, 1, 0)
+CIpFIZ$D.RB <- ifelse(substr(CIpFIZ$CONN, 4, 4)== 1, 1, 0)
+CIpFIZ$D.SP <- ifelse(substr(CIpFIZ$CONN, 5, 5)== 1, 1, 0)
+DD <- cbind(c("Domaine du Vieux Collège", "Domaine Jean Fournier",
+              "Domaine Charles Audoin"  , "Domaine Bernard Bouvier",
+              "Domaine Sylvain Pataille"),
+            apply(CIpFIZ[, 84: 88], 2, function(x)
+                paste0(round(table(x)[ 2]), " ",
+                       "(", round(table(x)[ 2]/ nrow(CIpFIZ)* 100), "%)")))
+
+
+library(xtable)
+tabb <- rbind(AA, QQ, DD)
+addtorow <- list()
+addtorow$pos <- list(0, 7, 11)
+addtorow$command <- c(
+    "\\multicolumn{2}{l}{Lieu d'achat des vins} \\\\\n",
+    "\\hline\n\\multicolumn{2}{l}{Type de vins achetés} \\\\\n\\hline\n",
+    "\\hline\n\\multicolumn{2}{l}{Connaissance des domaines}\\\\\n\\hline\n")
+
+print(xtable(tabb), include.rownames= F, include.colnames= F,
+      add.to.row = addtorow)
+
+## AFAIRE PLUS TARD
+CIpFIZ$DEGG <- sprintf("%012.0f", CIpFIZ$QI02, "0")
+CIpFIZ$G.VC <- ifelse(substr(CIpFIZ$CONN, 1, 1)== 1 |
+                      substr(CIpFIZ$CONN, 1, 1)== 1, 1, 0)
+
+for(i in 1: 12){
+    print(paste("Vin", i- 1))
+    print(table(substr(CIpFIZ$DEGG, i, i)== 1))
+}
+
+table(substr(CIpFIZ$DEGG, 1, 1)== 1)
+table(substr(CIpFIZ$DEGG, 1, 1)== 1)
+table(substr(CIpFIZ$DEGG, 1, 1)== 1)
+table(substr(CIpFIZ$DEGG, 1, 1)== 1)
+
+#+end_src
+
+#+RESULTS:
+[[file:Tables/StDesData2.tex]]
+
+** Ancien code                               :noexport:
+*** Additional remarks
+
+    La régression qui montre bien qu'il y a des welfare gains alors
+    que rien ne bouge.
+
+#+begin_src R :wrap example
+
+DatPool$WEIGHT <- ifelse(DatPool$AOC== "PCR", DatPool$NBPCR,
+                  ifelse(DatPool$AOC== "REG", DatPool$NBREG,DatPool$NBVIL))
+BetChx <- DatPool[, list(WTPi = weighted.mean(WTP, WEIGHT),
+                         FIX= mean(FIXIN), NBPCR= mean(NBPCR),
+                         NBREG= mean(NBREG), NBVIL= mean(NBVIL)),
+                  by= list(CX= substr(CHOIX, 1, 2), ID)]
+## DatPool[ID== "G01C01"][1: 3]
+## (8+ 5*6+ 4* 2.25)/ 11
+## BetChx
+mee <- felm(WTPi~ NBREG+ NBVIL+ NBPCR | 0 | 0 | ID, data= BetChx)
+mff <- felm(WTPi~ NBVIL+ NBPCR | ID | 0 | ID,
+           data= BetChx)
+htmlreg(list(maa, mbb, mcc, mdd, mee, mff), file= "Tables/Reg3.xls",
+        inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(maa, mbb, mcc, mdd, mee, mff))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+==============================================================================================
+                       Model 1      Model 2      Model 3      Model 4      Model 5  Model 6   
+----------------------------------------------------------------------------------------------
+(Intercept)              11.70 ***                 12.39 ***                 4.77             
+                         (0.79)                    (1.10)                  (10.24)            
+AOCREG:RegScr             3.39 ***     3.62 ***     3.47 ***     3.71 ***                     
+                         (0.47)       (0.32)       (0.58)       (0.50)                        
+AOCREG:RegNbb            -1.54 ***    -1.55 ***    -1.67 ***    -1.74 ***                     
+                         (0.19)       (0.14)       (0.22)       (0.19)                        
+AOCVIL:VilScr             0.45 ***     0.50 ***    -0.32        -0.33 *                       
+                         (0.11)       (0.07)       (0.50)       (0.16)                        
+AOCVIL:VilNbb            -0.43 ***    -0.45 ***    -0.29 ***    -0.32 ***                     
+                         (0.11)       (0.06)       (0.08)       (0.04)                        
+AOCPCR:VIN0               2.08         2.21 ***     1.90         1.56 *                       
+                         (1.21)       (0.58)       (1.31)       (0.68)                        
+AOCPCR:PcrNbb            -0.02        -0.05        -0.18 *      -0.21 ***                     
+                         (0.08)       (0.05)       (0.08)       (0.06)                        
+AOCREG:NBPCR                                       -0.11        -0.13                         
+                                                   (0.16)       (0.06)                        
+AOCVIL:NBPCR                                       -0.58        -0.63 ***                     
+                                                   (0.37)       (0.14)                        
+NBREG                                                                        0.22             
+                                                                            (1.01)            
+NBVIL                                                                        0.51     0.21 ***
+                                                                            (0.95)   (0.06)   
+NBPCR                                                                        0.64     0.37 ***
+                                                                            (0.98)   (0.06)   
+----------------------------------------------------------------------------------------------
+obs.                      1815         1815         1815         1815         625      625       
+R^2 (full model)          0.16         0.89         0.16         0.90        0.01     0.97    
+R^2 (proj model)          0.16         0.60         0.16         0.61        0.01     0.15
+==============================================================================================
+,*** p < 0.001, ** p < 0.01, * p < 0.05
+#+end_example
+
+*** Correcting WTP                           :noexport:
+
+    Possibilité de corriger les WTP lorsqu'il y a un Fixin premier cru
+    dedans.
+
+#+begin_src R
+DatPool$WTPcor <- ifelse(DatPool$FIXIN== 1 & DatPool$AOC== "PCR",
+                         "XX", as.numeric(DatPool$WTP))
+DatPool$WTPcor[DatPool$WTPcor%in% "XX"] <- as.numeric(
+    (as.numeric(substr(DatPool$STRUCT[DatPool$WTPcor %in% "XX"], 1, 1))/
+    (as.numeric(substr(DatPool$STRUCT[DatPool$WTPcor%in%"XX"], 1, 1))- 1))*
+    as.numeric(DatPool$WTP[DatPool$WTPcor%in% "XX"])-
+    1/
+    (as.numeric(substr(DatPool$STRUCT[DatPool$WTPcor%in% "XX"], 1, 1))- 1)*
+    as.numeric(rep(DatPool$WTP[substr(DatPool$STRUCT, 1, 1)== 1 &
+                               DatPool$WTPcor%in% "XX"], 5)))
+DatPool$WTPcor[DatPool$WTPcor< 0] <- NA
+DatPool$WTPcor <- as.numeric(DatPool$WTPcor)
+#+end_src
+
+*** The importance of AOC in WTP
+**** Text                                    :noheading:
+
+    With 125 participants, 5 scenarios and 3 willingness-to-pay (WTP)
+    by scenario, we have a total of 1825 observations.  Note that for
+    65 participants a /Fixin premier cru/ (named =VIN0=) was presented
+    whereas this wine was removed for the 60 other participants. In
+    all scenarios of AOC configurations, =VIN0= /Fixin premier cru/ is
+    classified as /premier cru/. =VIN5= and =VIN6= are always
+    classified as /village/ and =VIN10= is always classified as
+    /régional/.  We begin with 6 regressions of the individual WTP on
+    pooled data as reported in the following Table 1.
+
+    *Model 1* regresses WTP on AOC dummy variables. /Régional/ is the
+    reference modality with an average WTP equals to 6.77 euro.
+    /Village/ has a WTP about 2.71 higher than the reference modality
+    (average WTP of 9.5 euro) and /premier cru/ has a WTP about 6.25
+    higher (average WTP of 13 euro).  The R$^2$ shows that 16% of WTP
+    variations are explained by only AOC dummy variables.
+    
+    *Model 2* regresses WTP on AOC levels with participant fixed
+    effects. Contrary to previous model, this allows to control for
+    individual characteristics without specifying them.  The results
+    about the WTP for each AOC are quite stable.  The full model (AOC
+    and fixed effects) explains 89% of the variance. Once the fixed
+    effects are partialled out, the AOC dummies explain 59% of
+    within-subject WTP variations.  In this note, we do not control
+    for the individual questions that were asked during the experiment
+    as fixed effects allow to control all of them.
+
+    *Models 3 and 4* regress WTP on dummy variables about the presence
+    of the wines in scenarios.  The 10 dummy variables from =VIN0=
+    (/Fixin premier cru/) to =VIN10= (worst /régional/) equal 1 if the
+    wine is present in the set of wines corresponding to the reported
+    WTP and 0 otherwise.  It allows to recover the individual values
+    of each wines.  =VIN2= has a small significant positive effect in
+    model 3, but no longer significant in model 4 with the inclusion
+    of fixed effects.  At the reverse, the =VIN0= /Fixin premier cru/
+    presents a significant positive effect of 1.7 euros which is only
+    significant with fixed effects.  The statistically significant
+    effects of =VIN5= and =VIN10= are due to their collinearity with
+    the AOC dummies.  In effect, the effect of =VIN6= cannot be
+    identified separately from the effect of =VIN5= as they are always
+    in the same set of bottles (under the AOC /village/).  The =VIN5=
+    and =VIN6= dummies are redundant between them and are also
+    redundant with the =AOCVIL= dummy variable.  Also, =VIN10= is
+    redundant with the =AOCREG= dummy variable.  Hence, the
+    significant effects of =VIN5= and =VIN10= are in fact AOC effects,
+    as it is shown by the next two regressions.
+
+    *Models 5 and 6* regress WTP on both AOC and wine dummies.  The
+    dummy variables for =VIN5=, =VIN6= and =VIN10= are dropped because
+    they are collinear with AOC.  =VIN2= has still a small significant
+    effect in model without fixed effects and =VIN0= has still a high
+    significant effect with fixed effects.  The last model 6 shows
+    that controlling by =VIN0= (/Fixin premier cru/) decreases the
+    average premium for /premier cru/ by 0.8 euros (from 6.22 in model
+    2 to 5.41 in model 6).  Average WTP for /régional/ and /village/
+    are not modified by the inclusion of wine dummies, which show the
+    robustness of AOC effects.  The insignificant effects of =VIN1= to
+    =VIN9= dummies in model 6 shows that wine characteristics other
+    than AOC (producer, type of label, etc.) do not matter for
+    consumers' WTP.
+
+**** Results                                 :noheading:
+
+# LATEX: \verbatimfont{\footnotesize} \vspace{.5cm} Table 1: AOC and wine WTP premiums \vspace{-.5cm}
+
+#+begin_src R :wrap example
+library(lfe) ; library(texreg)
+m1 <- felm(WTP~ AOC | 0 | 0 | ID, data= DatPool)
+m2 <- felm(WTP~ AOC | 0+ ID | 0 | ID, data= DatPool)
+m3 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9
+           + VIN10 | 0 | 0 | ID, data= DatPool)
+m4 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9
+           + VIN10 | ID | 0 | ID, data= DatPool)
+m5 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9
+           + AOC | 0 | 0 | ID, data= DatPool)
+m6 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9
+           + AOC | ID | 0 | ID, data= DatPool)
+htmlreg(list(m1, m2, m3, m4, m5, m6), file= "Tables/Reg1.xls",
+        inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(m1, m2, m3, m4, m5, m6))
+ 
+m1 <- felm(WTPcor~ AOC | 0 | 0 | ID, data= DatPool)
+m2 <- felm(WTPcor~ AOC | 0+ ID | 0 | ID, data= DatPool)
+m3 <- felm(WTPcor~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9
+           + VIN10 | 0 | 0 | ID, data= DatPool)
+m4 <- felm(WTPcor~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9
+           + VIN10 | ID | 0 | ID, data= DatPool)
+m5 <- felm(WTPcor~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9
+           + AOC | 0 | 0 | ID, data= DatPool)
+m6 <- felm(WTPcor~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9
+           + AOC | ID | 0 | ID, data= DatPool)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+===================================================================================================
+                       Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
+---------------------------------------------------------------------------------------------------
+(Intercept)               6.77 ***                 12.06 ***                  6.63 ***             
+                         (0.41)                    (0.91)                    (0.43)                
+AOCVIL                    2.71 ***     2.71 ***                               2.80 ***     2.80 ***
+                         (0.20)       (0.20)                                 (0.25)       (0.26)   
+AOCPCR                    6.25 ***     6.22 ***                               5.43 ***     5.41 ***
+                         (0.40)       (0.40)                                 (0.78)       (0.55)   
+VIN0                                                1.70         1.73 **      1.70         1.73 ** 
+                                                   (1.26)       (0.61)       (1.26)       (0.61)   
+VIN1                                               -0.14        -0.14        -0.14        -0.14    
+                                                   (0.15)       (0.15)       (0.15)       (0.15)   
+VIN2                                                0.13 *       0.13         0.13 *       0.13    
+                                                   (0.07)       (0.07)       (0.07)       (0.07)   
+VIN3                                                0.02         0.02         0.02         0.02    
+                                                   (0.06)       (0.06)       (0.06)       (0.06)   
+VIN4                                                0.02         0.02         0.02         0.02    
+                                                   (0.07)       (0.07)       (0.07)       (0.07)   
+VIN5                                               -2.63 ***    -2.61 ***                          
+                                                   (0.67)       (0.38)                             
+VIN7                                               -0.04        -0.04        -0.04        -0.04    
+                                                   (0.10)       (0.11)       (0.10)       (0.11)   
+VIN8                                                0.02         0.02         0.02         0.02    
+                                                   (0.11)       (0.12)       (0.11)       (0.12)   
+VIN9                                                0.16         0.16         0.16         0.16    
+                                                   (0.22)       (0.23)       (0.22)       (0.23)   
+VIN10                                              -5.43 ***    -5.41 ***                          
+                                                   (0.78)       (0.55)                             
+---------------------------------------------------------------------------------------------------
+obs.                      1815         1815         1815         1815         1815         1815       
+R^2 (full model)          0.16         0.89         0.16         0.89         0.16         0.89    
+R^2 (proj model)          0.16         0.59         0.16         0.60         0.16         0.60
+===================================================================================================
+,*** p < 0.001, ** p < 0.01, * p < 0.05
+#+end_example
+
+*** Quality and quantity effects
+**** Text                                    :noheading:
+
+     The next set of 6 regressions on the same pooled data include two
+     additional sets of variables in addition to the AOC dummies
+     =AOCVIL=, =AOCPCR= and =VIN0= presented above.  The set of
+     variables =RegScr=, =VilScr= and =PcrScr= represent the *average
+     scores* of respectively /régional/, /village/ and /premier cru/
+     sets of wines.  A higher score of 10 is attributed to =VIN0=
+     (/Fixin premier cru/) and the smaller score of 0 is for =VIN10=
+     (worst /régional/).  Then, we average the individual wine score
+     for each set of wine bottles corresponding to a same AOC in each
+     scenarios.  These variables are expected to have positive effects
+     if the premiums associated to each AOC are increasing with the
+     average quality of wines.  The other set of new variables,
+     =RegNbb=, =VilNbb= and =PcrNbb= represents the *number of
+     bottles* in each AOC choice sets.  These variables are expected
+     to have negative effects in the presence of risk aversion.
+     Increasing the number wine bottles in the AOC set would increase
+     the uncertainty and would decrease average WTP.  These 2 sets of
+     variables are interacted with AOC dummies.
+
+     *Models 1 and 2* regress WTP on AOC dummies interacted with
+     average score for each AOC, without and with individual fixed
+     effects (the presence of =VIN0= is accounted for in the WTP for
+     /premier cru/ by the dummy =AOCPCR:VIN0=).  The effects of
+     average score is higher for /régional/ and /premier cru/ compared
+     to the intermediate AOC level of /village/.  These high effects
+     of about 0.5 euro for one additional point of score (compared to
+     0.3 euro for AOC /village/) are not estimated precisely, as we
+     can see the effect of score for /régional/ is not significant
+     without fixed effects.
+     
+     *Models 3 and 4* regress WTP on AOC dummies interacted with
+     numbers of bottle of each AOC, without and with individual fixed
+     effects (the presence of =VIN0= is accounted for in the WTP for
+     /premier cru/ by the dummy =AOCPCR:VIN0=).  These results are of
+     limited interest because of the correlation between the quantity
+     of wine bottles and the average quality of wines.  In effect, for
+     AOC /régional/ increasing the number of bottle is made
+     simultaneously with increasing the average quality.  For /premier
+     cru/, increasing the number of bottle is made simultaneously with
+     decreasing the average quality.  This explains why we obtain
+     respectively a positive and negative effects of the number of
+     bottles.  The positive and significant effect of the number of
+     bottle for the AOC /village/ in model 4 is puzzling.
+
+     *Models 5 and 6* content both the average score and the number of
+     bottles as explanatory variables.  Because of perfect
+     collinearity we have to drop the dummies about AOC and the dummy
+     =AOCPCR:VIN0= that control for the presence of /Fixin premier
+     cru/.  We found the expected signs for the effects of the average
+     scores for the 3 AOC (positive effects).  We found expected
+     (negative) effect for the number of bottles for AOC /régional/
+     and /village/.  The significant positive effect of the number of
+     bottles for the AOC /premier cru/ is puzzling, it is probably due
+     to the lack of control of the /Fixin premier cru/ effects.
+
+**** Results                                 :noheading:
+
+# LATEX: \verbatimfont{\footnotesize}\clearpage Table 2: Determinants of AOC effects \vspace{-.5cm}
+
+#+begin_src R :wrap example
+DatPool$AOCREG <- ifelse(DatPool$AOC== "REG", 1, 0)
+DatPool$AOCVIL <- ifelse(DatPool$AOC== "VIL", 1, 0)
+DatPool$AOCPCR <- ifelse(DatPool$AOC== "PCR", 1, 0)
+DatPool$NBOUT <- ifelse(DatPool$AOC== "PCR", DatPool$NBPCR,
+                 ifelse(DatPool$AOC== "VIL", DatPool$NBVIL, DatPool$NBREG))
+DatPool$PcrScr <- ifelse(DatPool$AOC== "PCR",
+                         DatPool$PCRscr- mean(DatPool$PCRscr, na.rm= T), 0)
+
+
+DatPool$VilScr <- ifelse(DatPool$AOC== "VIL",
+                         DatPool$VILscr- mean(DatPool$VILscr), 0)
+DatPool$RegScr <- ifelse(DatPool$AOC== "REG",
+                         DatPool$REGscr- mean(DatPool$REGscr), 0)
+DatPool$PcrNbb <- ifelse(DatPool$AOC== "PCR", DatPool$NBPCR, 0)
+DatPool$VilNbb <- ifelse(DatPool$AOC== "VIL", DatPool$NBVIL, 0)
+DatPool$RegNbb <- ifelse(DatPool$AOC== "REG", DatPool$NBREG, 0)
+
+m3a <- felm(WTP~ AOC+ AOCPCR:VIN0
+            + AOCREG: RegScr+ AOCVIL:VilScr+ AOCPCR:PcrScr 
+            | 0 | 0 | ID, data= DatPool)
+m3b <- felm(WTP~ AOC+ AOCPCR:VIN0
+            + AOCREG: RegScr+ AOCVIL:VilScr+ AOCPCR:PcrScr
+            | ID | 0 | ID, data= DatPool)
+m4a <- felm(WTP~ AOC+ AOCPCR:VIN0
+            + AOCREG: RegNbb+ AOCVIL:VilNbb+ AOCPCR:PcrNbb 
+            | 0 | 0 | ID, data= DatPool)
+m4b <- felm(WTP~ AOC+ AOCPCR:VIN0
+            + AOCREG: RegNbb+ AOCVIL:VilNbb+ AOCPCR:PcrNbb
+            | ID | 0 | ID, data= DatPool)
+m5a <- felm(WTP~ AOCREG:(RegScr+ RegNbb)
+            + AOCVIL:(VilScr+ VilNbb)+ AOCPCR:(PcrScr+ PcrNbb) 
+            | 0 | 0 | ID, data= DatPool)
+m5b <- felm(WTP~ AOCREG:(RegScr+ RegNbb)
+            + AOCVIL:(VilScr+ VilNbb)+ AOCPCR:(PcrScr+ PcrNbb)
+            | ID | 0 | ID, data= DatPool)
+
+htmlreg(list(m3a, m3b, m4a, m4b, m5a, m5b), file= "Tables/Reg2.xls",
+        inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(m3a, m3b, m4a, m4b, m5a, m5b))
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+===================================================================================================
+                       Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
+---------------------------------------------------------------------------------------------------
+(Intercept)               6.77 ***                  6.26 ***                 10.22 ***             
+                         (0.41)                    (0.54)                    (1.19)                
+AOCVIL                    2.71 ***     2.71 ***     2.05 *       2.41 ***                          
+                         (0.20)       (0.20)       (0.91)       (0.43)                             
+AOCPCR                    5.49 ***     5.47 ***     6.40 ***     6.56 ***                          
+                         (0.74)       (0.52)       (0.80)       (0.59)                             
+AOCPCR:VIN0               1.32         1.35 *       1.83         1.86 **                           
+                         (1.27)       (0.61)       (1.26)       (0.61)                             
+AOCREG:RegScr             0.31         0.46 **                                2.47 ***     2.63 ***
+                         (0.24)       (0.16)                                 (0.72)       (0.40)   
+AOCVIL:VilScr             0.26 **      0.29 ***                               0.32 *       0.36 ***
+                         (0.09)       (0.06)                                 (0.14)       (0.08)   
+AOCPCR:PcrScr             0.51 ***     0.51 ***                               2.25 *       2.32 ***
+                         (0.10)       (0.11)                                 (0.96)       (0.44)   
+AOCREG:RegNbb                                       0.16         0.21 **     -1.08 **     -1.08 ***
+                                                   (0.12)       (0.08)       (0.33)       (0.18)   
+AOCVIL:VilNbb                                       0.24 *       0.20 ***    -0.14        -0.14    
+                                                   (0.12)       (0.05)       (0.21)       (0.10)   
+AOCPCR:PcrNbb                                      -0.25 ***    -0.25 ***     0.97 *       0.98 ***
+                                                   (0.05)       (0.05)       (0.42)       (0.19)   
+---------------------------------------------------------------------------------------------------
+Numb. obs.                1815         1815         1815         1815         1815         1815       
+R^2 (full model)          0.17         0.90         0.17         0.90         0.16         0.90    
+R^2 (proj model)          0.17         0.61         0.17         0.61         0.16         0.61
+===================================================================================================
+,*** p < 0.001, ** p < 0.01, * p < 0.05
+#+end_example
+
+#+LATEX: \clearpage
+
+*** Additional remarks
+**** Text                                    :noheading:
+
+     *Additional regressions*. Models 1 and 2 in the following Table 3
+     allow to recover the expected signs by controlling for =VIN0=
+     /Fixin premier cru/.  Again, because of collinearity, we can not
+     control for the average score of /premiers crus/ in these
+     regressions.  The interpretation of these results is nevertheless
+     interesting: the WTP for each AOC is increasing with the average
+     score of the bottles that are in that AOC and decreasing with the
+     number of these bottles.  The number of bottle increases the
+     uncertainty so it is showed to decrease the value of AOC
+     information.  Models 3 and 4 test more directly the presence of
+     what Costanigro et al. (2019) call the comparative stigma.
+     Accordingly, the "introduction of a new high quality [AOC] will
+     damage the perceived quality of all lower tier products."  We
+     find a negative comparative stigma for AOC /village/ of 0.63 euro
+     for each additional bottle in the AOC /premier cru/ (recall that
+     we control for the average score of /village/ wines).  This is
+     true only for the AOC /village/ as the comparative stigma for AOC
+     /régional/ is not significant.
+
+     *About the welfare analysis*.  In the note for INAO we have said
+     that maximizing the WTP for all wines is like maximizing the
+     total welfare, i.e., the sum of consumer and producer surplus.
+     By noting $w_{ij}$ the WTP for a bottle of the AOC $j$ by the
+     consumer $i$, $p_j$ the price paid for this bottle $j$ and $c$
+     the constant production cost of one wine bottle, we have :
+     - consumer surplus: $CS_{ij}= w_{ij}-p_j$
+     - producer surplus: $PS_j= p_j- c$
+     - total welfare: $S= \sum_{i,j} (CS_{ij}+ PS_j)= \sum_{i,j}
+       (w_{ij}-c)$
+     So, under the assumption that marginal production costs $c$ are
+     constant, maximizing the sum of WTP for each AOC is equivalent to
+     maximizing total welfare.
+
+     *About the value of AOC*. Now consider that consumers are risk
+     neutral and have 11 unobserved WTPs for each of the 11 wines that
+     are presented in the experiment (such values for each wines
+     separately were not asked directly in the experiment).  Risk
+     neutrality implies that the WTP for a given AOC is the average of
+     the WTP for each wines that are grouped in the AOC.  So, if we
+     consider a scenario $A$ with $J^A_R$ wines in AOC /Régional/ and
+     $J^A_V$ wines in AOC /village/ for a total of $J$ wines, we can
+     note the expected WTP corresponding to the 3 AOC $R$, $V$ and $P$
+     as:
+
+     $$ W_{iR}^A= \tfrac{1}{J^A_R}\sum\nolimits_{j=0}^{J^A_R} w_{ij}
+     \;\;\mbox{ ;
+     }\;\;W_{iV}^A=\tfrac{1}{J^A_V}\sum\nolimits_{j=J^A_R+1}^{J^A_R+J^A_V}
+     w_{ij} \;\;\mbox{ and }\;\;
+     W_{iR}^A=\tfrac{1}{J-J^A_R-J^A_V}\sum\nolimits_{j=J^A_V+1}^{J}
+     w_{ij}.  $$
+
+     Consequently, the weighted average of these three WTP for each
+     individuals would be the same in all scenarios: 
+
+     $$ W_i^A= \tfrac{J^A_R}{J}W_{iR}^A+ \tfrac{J^A_V}{J}W_{iV}^A+
+     \tfrac{J-J^A_R-J^A_V}{J}W_{iP}^A =
+     \tfrac{1}{J}\sum\nolimits_{j=0}^{J} w_{ij} \;\;\forall A$$
+
+     We compute such weighted averages $W_i^S$, $S= 1, \dots, 5$ for
+     each 125 participants $\times$ 5 scenarios (625 observations) and
+     regress them on the number of bottle that are /premier cru/ and
+     /village/ in models 5 and 6 of Table 3 below (with and without
+     individual fixed effects).  According to previous theoretical
+     considerations, the $W_i^S$ must be constant for each individual
+     (regardless of scenario $S$) and, in particular, scenario
+     characteristics must be insignificant.  this result is quite
+     intuitive as the wine proposed along the scenarios are the
+     /same/.  But we obtain significant effects that show a
+     significant increase in the welfare from the increase in the
+     number of /premier cru/ and /village/.  How can we interpret
+     these free lunch welfare gains?  A particular case of umbrella
+     branding?
+
+**** Results                                 :noheading:
+
+# LATEX: \verbatimfont{\footnotesize} \vspace{1cm}Table 3: Additional regressions \vspace{-.5cm}
+
+#+begin_src R :wrap example
+## table(DatPool$VIN0, DatPool$FIXIN)
+maa <- felm(WTP~ AOCREG:(RegScr+ RegNbb)
+            + AOCVIL:(VilScr+ VilNbb)+ AOCPCR:(VIN0+ PcrNbb)
+            | 0 | 0 | ID, data= DatPool)
+mbb <- felm(WTP~ AOCREG:(RegScr+ RegNbb)
+            + AOCVIL:(VilScr+ VilNbb)+ AOCPCR:(VIN0+ PcrNbb)
+            | ID | 0 | ID, data= DatPool)
+
+mcc <- felm(WTP~ AOCREG:(RegScr+ RegNbb+ NBPCR)
+            + AOCVIL:(VilScr+ VilNbb+ NBPCR)+ AOCPCR:(VIN0+ PcrNbb)
+            | 0 | 0 | ID, data= DatPool)
+mdd <- felm(WTP~ AOCREG:(RegScr+ RegNbb+ NBPCR)
+            + AOCVIL:(VilScr+ VilNbb+ NBPCR)+ AOCPCR:(VIN0+ PcrNbb)
+            | ID | 0 | ID, data= DatPool)
+
+DatPool$WEIGHT <- ifelse(DatPool$AOC== "PCR", DatPool$NBPCR,
+                  ifelse(DatPool$AOC== "REG", DatPool$NBREG,DatPool$NBVIL))
+BetChx <- DatPool[, list(WTPi = weighted.mean(WTP, WEIGHT),
+                         FIX= mean(FIXIN), NBPCR= mean(NBPCR),
+                         NBREG= mean(NBREG), NBVIL= mean(NBVIL)),
+                  by= list(CX= substr(CHOIX, 1, 2), ID)]
+## DatPool[ID== "G01C01"][1: 3]
+## (8+ 5*6+ 4* 2.25)/ 11
+## BetChx
+mee <- felm(WTPi~ NBREG+ NBVIL+ NBPCR | 0 | 0 | ID, data= BetChx)
+mff <- felm(WTPi~ NBVIL+ NBPCR | ID | 0 | ID,
+           data= BetChx)
+htmlreg(list(maa, mbb, mcc, mdd, mee, mff), file= "Tables/Reg3.xls",
+        inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(maa, mbb, mcc, mdd, mee, mff))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+==============================================================================================
+                       Model 1      Model 2      Model 3      Model 4      Model 5  Model 6   
+----------------------------------------------------------------------------------------------
+(Intercept)              11.70 ***                 12.39 ***                 4.77             
+                         (0.79)                    (1.10)                  (10.24)            
+AOCREG:RegScr             3.39 ***     3.62 ***     3.47 ***     3.71 ***                     
+                         (0.47)       (0.32)       (0.58)       (0.50)                        
+AOCREG:RegNbb            -1.54 ***    -1.55 ***    -1.67 ***    -1.74 ***                     
+                         (0.19)       (0.14)       (0.22)       (0.19)                        
+AOCVIL:VilScr             0.45 ***     0.50 ***    -0.32        -0.33 *                       
+                         (0.11)       (0.07)       (0.50)       (0.16)                        
+AOCVIL:VilNbb            -0.43 ***    -0.45 ***    -0.29 ***    -0.32 ***                     
+                         (0.11)       (0.06)       (0.08)       (0.04)                        
+AOCPCR:VIN0               2.08         2.21 ***     1.90         1.56 *                       
+                         (1.21)       (0.58)       (1.31)       (0.68)                        
+AOCPCR:PcrNbb            -0.02        -0.05        -0.18 *      -0.21 ***                     
+                         (0.08)       (0.05)       (0.08)       (0.06)                        
+AOCREG:NBPCR                                       -0.11        -0.13                         
+                                                   (0.16)       (0.06)                        
+AOCVIL:NBPCR                                       -0.58        -0.63 ***                     
+                                                   (0.37)       (0.14)                        
+NBREG                                                                        0.22             
+                                                                            (1.01)            
+NBVIL                                                                        0.51     0.21 ***
+                                                                            (0.95)   (0.06)   
+NBPCR                                                                        0.64     0.37 ***
+                                                                            (0.98)   (0.06)   
+----------------------------------------------------------------------------------------------
+obs.                      1815         1815         1815         1815         625      625       
+R^2 (full model)          0.16         0.89         0.16         0.90        0.01     0.97    
+R^2 (proj model)          0.16         0.60         0.16         0.61        0.01     0.15
+==============================================================================================
+,*** p < 0.001, ** p < 0.01, * p < 0.05
+#+end_example
+
+*** Ternary graph 1
+
+#+begin_src R :results output exemple
+library(Ternary)
+TernaryPlot(alab= '% PREMIER CRU \u2192', isometric= T,
+            blab= '% VILLAGE \u2192', clab= '\u2190 % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08)
+Interest <- matrix(c( 40, 20, 40,
+                      40, 60, 00,
+                      00, 60, 40), ncol= 3, byrow= TRUE)
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+
+
+gg <- cbind(aggregate(data.frame(DatPool[, c(6: 8, 4)]),
+                      by= list(DatPool$STRUCT), mean, na.rm= T),
+            aggregate(rep(1, nrow(DatPool)),
+                      by=list(DatPool$STRUCT), sum)[, -1])
+dpt <- list(as.numeric(gg[1, 2: 4]))
+for (i in 2: nrow(gg)) dpt <- c(dpt, list(as.numeric(gg[i, 2: 4])))
+names(gg)[ 6] <- "x"
+AddToTernary(points, dpt,
+             bg= grey.colors(100)[ round(gg$x/ 1.95)], pch=22, cex= 5)
+AddToTernary(text, dpt, gg[, 1], cex=0.8, font=2)
+
+legend('bottomright', 
+       pch=22, pt.cex=1.8,
+       pt.bg= grey.colors(100)[ round(gg$x/ 1.95)],
+       legend= gg$x, 
+       cex=0.8, bty='n')
+#+end_src
+
+*** Plot results ANCIEN
+
+#+Name: Lst:TRF
+#+Header: :width 11 :height 9
+#+begin_src R :results graphics :file "Figures/TriangleF.pdf"
+library(Ternary)
+DatPool$SR <- factor(paste(DatPool$PCR,
+                           DatPool$VIL,
+                           DatPool$REG, sep= '|'))
+ww <- lm(value~ 0+ VIN* SR, data= DatPool)
+
+PXPRD <- expand.grid(PCR= 0: 4, VIL= 2: 6, REG= 0: 4)
+PXPRD$SR <- factor(paste(PXPRD$PCR, PXPRD$VIL,
+                         PXPRD$REG, sep= '|'))
+
+PXPRD <- subset(PXPRD, rowSums(PXPRD[, 1: 3])== 10 & PXPRD$SR!= "4|6|0")
+PXPRD$VIN <- factor("PCR")
+PXPRD$PCRU <- predict(ww, newdata= PXPRD)
+PXPRD$VIN <- factor("VIL")
+PXPRD$VILL <- predict(ww, newdata= PXPRD)
+PXPRD$VIN <- factor("REG")
+PXPRD$REGI <- predict(ww, newdata= PXPRD)
+PXPRD$TOTA <- (PXPRD$PCR* PXPRD$PCRU/ 10)+
+    (PXPRD$VIL* PXPRD$VILL/ 10)+ (PXPRD$REG* PXPRD$REGI/ 10)
+summary(PXPRD)
+dpt <- list(as.numeric(PXPRD[1, 1: 3]))
+for (i in 2: nrow(PXPRD)) dpt <- c(dpt,
+                                    list(as.numeric(PXPRD[i, 1: 3])))
+
+library(Ternary)
+par(mfrow= c(2, 2), mar= c(0, 0, 3, 0))
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, main= "Consentement à Payer Premier Cru",
+            ylim= c(-.2, .8))
+
+Interest <- matrix(c( 40, 20, 40,
+                      40, 60, 00,
+                      00, 60, 40), ncol= 3, byrow= TRUE)
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$PCRU, 1), cex=0.8, font=2)
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, main= "Consentement à Payer Village",
+            ylim= c(-.2, .8))
+
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$VILL, 1), cex=0.8, font=2)
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, main= "Consentement à Payer Régional",
+            ylim= c(-.2, .8))
+
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$REGI, 1), cex=0.8, font=2)
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, main= "Consentement à Payer Moyenne Pondérée",
+            ylim= c(-.2, .8))
+
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$TOTA, 1), cex=0.8, font=2)
+#+end_src
+
+#+Name: Fig:TRF
+#+ATTR_LaTeX: :options scale= .5
+#+Caption: 
+#+RESULTS: Lst:TRF
+[[file:Figures/TriangleF.pdf]]
+
+*** Quantile reg
+**** D10
+
+#+Name: Lst:TRD1
+#+Header: :width 11 :height 9
+#+begin_src R :results graphics :file "Figures/TriangleD1.pdf"
+DatPool$SR <- factor(paste(DatPool$PCR,
+                           DatPool$VIL,
+                           DatPool$REG, sep= '|'))
+PXPRD <- expand.grid(PCR= 0: 4, VIL= 2: 6, REG= 0: 4)
+PXPRD$SR <- factor(paste(PXPRD$PCR, PXPRD$VIL,
+                         PXPRD$REG, sep= '|'))
+
+library(quantreg)
+
+ww1 <- rq(value~ 0+ VIN* SR, data= DatPool, tau= .9)
+summary(ww1, se= "boot")
+coef(ww1)
+PXPRD <- expand.grid(PCR= 0: 4, VIL= 2: 6, REG= 0: 4)
+PXPRD$SR <- factor(paste(PXPRD$PCR, PXPRD$VIL,
+                         PXPRD$REG, sep= '|'))
+
+PXPRD <- subset(PXPRD, rowSums(PXPRD[, 1: 3])== 10 & PXPRD$SR!= "4|6|0")
+PXPRD$VIN <- factor("PCR")
+PXPRD$PCRU <- predict(ww1, newdata= PXPRD)
+PXPRD$VIN <- factor("VIL")
+PXPRD$VILL <- predict(ww1, newdata= PXPRD)
+PXPRD$VIN <- factor("REG")
+PXPRD$REGI <- predict(ww1, newdata= PXPRD)
+PXPRD$TOTA <- (PXPRD$PCR* PXPRD$PCRU/ 10)+
+    (PXPRD$VIL* PXPRD$VILL/ 10)+ (PXPRD$REG* PXPRD$REGI/ 10)
+dpt <- list(as.numeric(PXPRD[1, 1: 3]))
+for (i in 2: nrow(PXPRD)) dpt <- c(dpt,
+                                    list(as.numeric(PXPRD[i, 1: 3])))
+
+library(Ternary)
+par(mfrow= c(2, 2), mar= c(0, 0, 3, 0))
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, ylim= c(-.2, .8),
+            main= "Consentement à Payer Premier Cru (1er décile)")
+Interest <- matrix(c( 40, 20, 40,
+                      40, 60, 00,
+                      00, 60, 40), ncol= 3, byrow= TRUE)
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$PCRU, 1), cex=0.8, font=2)
+
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, ylim= c(-.2, .8),
+            main= "Consentement à Payer Village (1er décile)")
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$VILL, 1), cex=0.8, font=2)
+
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, ylim= c(-.2, .8),
+            main= "Consentement à Payer Régional (1er décile)")
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$REGI, 1), cex=0.8, font=2)
+
+TernaryPlot(alab= '% PREMIER CRU ->', isometric= T,
+            blab= '% VILLAGE ->', clab= '<-  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            padding=0.08, ylim= c(-.2, .8),
+            main= "Consentement à Payer Toutes AOC (1er décile)")
+Interest <- matrix(c( 40, 20, 40,
+                      40, 60, 00,
+                      00, 60, 40), ncol= 3, byrow= TRUE)
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, round(PXPRD$TOTA, 1), cex=0.8, font=2)
+ #+end_src
+
+#+Name: Fig:TRD1
+#+ATTR_LaTeX: :options scale= .5
+#+Caption: 
+#+RESULTS: Lst:TRD1
+[[file:Figures/TriangleD1.pdf]]
+
+**** Q1
+
+#+Name: Lst:TRQ1
+#+Header: :width 11 :height 9
+#+begin_src R :results graphics :file "Figures/TriangleQ1.pdf"
+DatPool$SR <- factor(paste(DatPool$PCR,
+                           DatPool$VIL,
+                           DatPool$REG, sep= '|'))
+PXPRD <- expand.grid(PCR= 0: 4, VIL= 2: 6, REG= 0: 4)
+PXPRD$SR <- factor(paste(PXPRD$PCR, PXPRD$VIL,
+                         PXPRD$REG, sep= '|'))
+
+library(quantreg)
+
+ww1 <- rq(value~ 0+ VIN* SR, data= DatPool, tau= .75)
+summary(ww1, se= "boot")
+coef(ww1)
+PXPRD <- expand.grid(PCR= 0: 4, VIL= 2: 6, REG= 0: 4)
+PXPRD$SR <- factor(paste(PXPRD$PCR, PXPRD$VIL,
+                         PXPRD$REG, sep= '|'))
+
+PXPRD <- subset(PXPRD, rowSums(PXPRD[, 1: 3])== 10 & PXPRD$SR!= "4|6|0")
+PXPRD$VIN <- factor("PCR")
+PXPRD$PCRU <- predict(ww1, newdata= PXPRD)
+PXPRD$VIN <- factor("VIL")
+PXPRD$VILL <- predict(ww1, newdata= PXPRD)
+PXPRD$VIN <- factor("REG")
+PXPRD$REGI <- predict(ww1, newdata= PXPRD)
+PXPRD$TOTA <- (PXPRD$PCR* PXPRD$PCRU/ 10)+
+    (PXPRD$VIL* PXPRD$VILL/ 10)+ (PXPRD$REG* PXPRD$REGI/ 10)
+dpt <- list(as.numeric(PXPRD[1, 1: 3]))
+for (i in 2: nrow(PXPRD)) dpt <- c(dpt,
+                                    list(as.numeric(PXPRD[i, 1: 3])))
+
+head(PXPRD)
+library(Ternary)
+par(mfrow= c(2, 2), mar= c(0, 0, 3, 0))
+TernZoom(PXPRD$PCRU, "CAP moyen pour une bouteille niveau Premier Cru")
+TernZoom(PXPRD$VILL, "CAP moyen pour une bouteille niveau Village")
+TernZoom(PXPRD$REGI, "CAP moyen pour une bouteille niveau Régional")
+TernZoom(PXPRD$TOTA, "CAP moyen pour une bouteille tout niveau")
+ #+end_src
+
+#+Name: Fig:TRQ1
+#+ATTR_LaTeX: :options scale= .5
+#+Caption: 
+#+RESULTS: Lst:TRQ1
+[[file:Figures/TriangleQ1.pdf]]
+
+* Writing
+** Introduction
+
+   Geographical Indications (GIs) provide a certified information
+   about the place of production as a quality signal given to
+   consumers (Menapace and Moschini, 2012 ; Bonroy and Constantatos,
+   2015).  The credibility of this information depends on the
+   perception that consumer have about the designation scheme that
+   maps the physical attributes of production sites and the GI names
+   used to reference the products.  Among the numerous determinants of
+   this perception, the historical stability of the GI scheme is
+   clearly important.  In effect, the process of reputation is a
+   two-way street between the constant (or increasing) product quality
+   supplied and the satisfaction obtained from consumption.
+   Nevertheless, their exist numerous forces that works in order to
+   the adaptation of GIs to changing environment, production technics,
+   or preference .  But also without changing the product the
+   reputation or quality process could lead to study the possibility
+   to change GIs.  We propose to study a change at a given moment of
+   time for a given quality as a first assessment.  Such change have
+   to be made in consistency with consumers' perceptions and
+   preference in order to keep credibility.
+
+   The trade-off theoretically for a given quality, umbrella at the
+   cost of dercreasing the credibilty of high quality, highest quality
+   go out bad for the one that stays, comparative stigma.  Lobbying, 
+
+   We study a particular modification histroical elements of Marsannay
+   but the methodology can be more generally used.
+
+   Plan
+
+** Simulation
+
+   Figure 2 shows the average WTP of each GI level individually and
+   for the weighted average on the /Marsannay/ production area.  For
+   each GI level, the scenario that maximizes the average WTP is at
+   the center and corresponds to 20% of /Premier Cru/ level, 50% of
+   /Village/ level, and 30% of regional level.  This combination
+   presents in general small improvements relatively to the current
+   situation: an average gain of \EUR{}0.2 by bottle for the /Régional
+   level/, and an average gain of \EUR{}0.1 by bottle for the /Village
+   level/.  The average gain on the /Premier Cru/ is not estimable as
+   /Premier Cru/ does not exists currently.  We can see a loss of
+   \EUR{}0.9 by bottle compared to /Fixin Premier Cru/.  The gains
+   from other scenarios can nevertheless be significant, up to
+   \EUR{}1.2 (7.3- 6.1) for the /Régional/ level, up to \EUR{}2.2 for
+   the /Village/ level, and up to \EUR{}3.4 (14- 10.6) for the
+   /Premier Cru/ level.
+
+   On the whole area, the scenario that maximize the average WTP is
+   not the same, it is the scenario with 40% of /Premier Cru/ level,
+   40% of /Village/ level, and 20% of regional level with an average
+   WTP equals to \EUR{}10.9.  The rational of the results is that the
+   WTP are weighted by the percentages and, consequently, the gain of
+   /Premier Cru/ are more weighted.  The gain compared to the actual
+   situation is significant, \EUR{}2.5 (10.9-8.4) on average.  this
+   gain corresponds to the highest possible between all scenarios
+   available.  Note that, while this scenario maximizes the average
+   WTP for a bottle from the /Marsannay/ area, maximizing the WTP for
+   each GIs individually could also be policy relevant.  In
+   particular, choosing the scenario that maximize the WTP of the
+   /Premier Cru/ levels is probably the scenarios that limits the
+   impact of this change of GI for the other /Premier Crus/ of the
+   area.  Knowing the umbrella effects provided by the other, it could
+   render the GI change more acceptable.
+
+   De la même manière que j'ai calculé les moyennes par scénarios, on
+   pourrait calculer des quartiles pour mieux représenter
+   l'hétérogénéité.
+   
+* Tables
+*** Fizz variables
+
+#+begin_src R :results output :exports code :file "Tables/FizzVar.tex"
+library(reporttools) ; library(plyr)
+tmp1 <- read.csv("Data/WTPraw.csv", sep= ";")
+tmp2 <- read.csv("Data/FIZraw.csv", sep= ";")
+tmp2$ID <- paste0(ifelse(nchar(as.character(tmp2$Groupe))== 3,
+                        as.character(tmp2$Groupe),
+                        paste0("G0",
+                               substr(as.character(tmp2$Groupe), 2, 2))),
+                 paste0("C", substr(tmp2$N..Cabine, 8, 10)))
+CIpFIZ <- merge(tmp1, tmp2, by= "ID")
+CIpFIZ$SEXE <- as.character(ifelse(CIpFIZ$Q1== 1, "Masculin", "Féminin"))
+CIpFIZ$AGE  <- 2018- CIpFIZ$Q2
+CIpFIZ$AGEC <- ifelse(CIpFIZ$AGE<= 30                 , "20-30 ans",
+               ifelse(CIpFIZ$AGE> 30 & CIpFIZ$AGE<= 40, "30-40 ans",
+               ifelse(CIpFIZ$AGE> 40 & CIpFIZ$AGE<= 50, "40-50 ans",
+               ifelse(CIpFIZ$AGE> 50 & CIpFIZ$AGE<= 60, "50-60 ans",
+                      "60-90 ans"))))
+CIpFIZ$CSP <- revalue(factor(CIpFIZ$Q3),
+                    c("2"= "Artisans", "3"= "Managers",
+                      "4"= "Prof. interm.","5"= "Employés",
+                      "7"= "Retraités", "8"= "Sans activité"))
+CIpFIZ$REV <- revalue(factor(CIpFIZ$Q5),
+                      c("1"= "Less than 1000",
+                        "2"= "Between 1000 and 2000",
+                        "3"= "Between 2000 and 3000",
+                        "4"= "Between 3000 and 4000",
+                        "5"= "Between 4000 and 5000",
+                        "6"= "Between 5000 and 6000",
+                        "7"= "More than 6000"))
+CIpFIZ$QTT  <- factor(ifelse(CIpFIZ$Q8== 1, "Less than 5 bottles",
+                      ifelse(CIpFIZ$Q8== 2, "Between 5 and 10 bottles",
+                             "More than 10 bottles")),
+                      levels= c("Less than 5 bottles",
+                                "Between 5 and 10 bottles",
+                                "More than 10 bottles"))
+CIpFIZ$BGT  <- factor(ifelse(CIpFIZ$Q9== 1, "Less than 20 euros",
+                      ifelse(CIpFIZ$Q9== 2, "Between 20 and 50 euros",
+                      ifelse(CIpFIZ$Q9== 3, "Between 50 and 100 euros",
+                             "More than 100 euros"))),
+                      levels= c("Less than 20 euros",
+                                "Between 20 and 50 euros",
+                                "Between 50 and 100 euros",
+                                "More than 100 euros"))
+tableNominal(CIpFIZ[, c("SEXE", "AGEC", "CSP", "REV", "QTT", "BGT")],
+             vertical= F, caption.placement = "top", longtable= FALSE, 
+             cap = "Summary of princial Fizz variables",
+             font.size = "normalsize",
+             add.to.row= list(pos= list(-1, 0, 33),
+                              command= c("\\hline\\hline\\toprule",
+                                         "\\midrule", "\\bottomrule")))
+#+end_src
+
+#+RESULTS:
+[[file:Tables/FizzVar.tex]]
+
+* Figures
+* Bibliography
+  :PROPERTIES:
+  :EXPORT_FILE_NAME:    Bibliographie.pdf
+  :EXPORT_LATEX_CLASS:  ManueBibt
+  :EXPORT_OPTIONS:      TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc toc:nil H:2
+  :EXPORT_LATEX_HEADER: \usepackage{hyperref, xcolor} \hypersetup{colorlinks=true, linkcolor=red, urlcolor=blue, citecolor=gray} \usepackage[utf8]{inputenc} \usepackage[T1]{fontenc} 
+  :EXPORT_TITLE:        Integrating consumer valuation in the design of Geographical Indications
+  :EXPORT_AUTHOR:       \textsc{Bibliography}
+  :END:
+** Abstract                                  :noheading:
+#+begin_abstract
+Ce fichier est l'index de la bibliographie pour le papier, les
+références complètes des articles sont à la fin, et en cliquant sur
+les lien en bleu vous accédez directement aux fichiers pdf.
+
+La bibliographie est séparée en trois sections: éco expé, indications
+géographiques et un thème que je pense pertinent de creuser, les
+marques ombrelles et les extensions de marques (qui renvoient à une
+même littérature). Ce fichier contient également quelques notes de
+lecture et une répartition des articles entre nous. Un papier très
+proche de ce qu'on fait est cite:CSCa19, j'ai rédigé un paragraphe
+ci-dessous que l'on pourrait inclure directement dans notre papier
+pour comparer précisemment nos approches.
+#+end_abstract
+** Experimental economics
+*** cite:MPTe14 [[file:Biblio/MPTe14.pdf][Experiment of price as a signal of quality (JWE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{MPTe14,
+  title={Price as a signal of product quality: Some experimental evidence},
+  author={Mastrobuoni, Giovanni and Peracchi, Franco and Tetenov, Aleksey},
+  journal={Journal of Wine Economics},
+  volume={9},
+  number={2},
+  pages={135--152},
+  year={2014},
+  publisher={Cambridge University Press}
+}
+#+end_src
+
+- Stephan
+- The authors show that results from an experiment can be relevant to
+  estimate the demand for wine in line with quality and price
+  variations.
+- The experiment is nevertheless different from our as the
+  participants taste the wines and there are not monetary incentives.
+- Could be cited as a good example of experimental economics applied
+  to wine demand.
+
+*** cite:RMCP15 [[file:Biblio/RMCP15.pdf][Reputation tapping (ERAE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{RMCP15,
+  title={Reputation tapping},
+  author={Rickard, Bradley J and McCluskey, Jill J and Patterson, Richard W},
+  journal={European Review of Agricultural Economics},
+  volume={42},
+  number={4},
+  pages={675--701},
+  year={2015},
+  publisher={Oxford University Press}}
+#+end_src
+
+- Stephan
+- A paper close to our as they look (experimentally) at the links
+  between american and french wine, in our experiment we look at the
+  link between the wines of Marsannay and the other (more famous)
+  wines of Burgundy
+- In their experiment, they examine the effects from linking emerging
+  wine regions and an established domestic wine region to high quality
+  international regions. They employ three treatments to expose
+  different subjects to different types of information that are
+  designed to influence the collective reputations for the wines. One
+  treatment provides information that creates a link between each US
+  wine production region and a French wine production region. They
+  include three wines from established wine regions (in California)
+  and four wines from emerging wine regions (two in Oregon and two in
+  Virginia).
+
+*** cite:GLSu16 [[file:Biblio/GLSu16.pdf][Consumer knowledge and valuation of wine attributes (JBEE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{GLSu16,
+  title={Consumer knowledge affects valuation of product attributes:
+                  Experimental results for wine},
+  author={Gustafson, Christopher R and Lybbert, Travis J and Sumner,
+                  Daniel A},
+  journal={Journal of Behavioral and Experimental Economics},
+  volume={65},
+  pages={85--94},
+  year={2016},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Stephan
+- As in our experiment, the participants bid on wine sequentially
+- Participants updated significantly their bids after taste-testing of
+  the wines.
+- They found that knowledge and preference are separable. Because we
+  are interested in knowledge in our experiment, it is reasonable that
+  participant do not taste the wine. (it is also a good reason to not
+  put "consumer preference in the title of our article").
+
+*** cite:CSCa19 [[file:Biblio/CSCa19.pdf][Vertical differentiation and geographical indications (FP)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{CSCa19,
+  title={Vertical differentiation via multi-tier geographical
+                  indications and the consumer perception of quality:
+                  The case of Chianti wines},
+  author={Costanigro, Marco and Scozzafava, Gabriele and Casini, Leonardo},
+  journal={Food Policy},
+  year={2019},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Jean-sauveur
+- Proposition for the paragraph to be included in the paper: "A recent
+  independent work citep:CSCa19 based on a close theoretical framework
+  citep:MRos78,MMos12 study the effects in terms of market shares of
+  the introduction of a new quality certification label /Gran
+  Selezione/ at the top of the Chianti wines hierarchy.  From an
+  online survey with randomized scenarios, this new minimum standard
+  provides some economic gains from increased vertical differentiation
+  that surpass clearly the decreases the perceived quality of all
+  other Chianti wines.  Except the methodological differences (the
+  absence economic incentives in particular), one stringent difference
+  is that the new standard does not modify the other quality standards
+  for Chianti wines, hence the decreases of the perceived quality of
+  all other wines is due to a subjective and naive "comparative
+  stigma".  In our case, the extension of the /Premier Cru/ area from
+  the best vineyards is made jointly with a decrease of the average
+  quality of the vineyards that stay at the /Village/ level below. The
+  decrease of the perceived quality that we found is rational and
+  still exist with full information, as it is the case in the typical
+  models of GIs citep:DSwi14,GFin17,YBMZ17.  Another difference is
+  that the authors produce an /ex post/ analysis for a product that
+  exists actually whereas our methodology is applied /ex ante/ for the
+  GI /Marsannay Premier Cru/ which does not exist at the moment of the
+  experimentation."
+
+*** cite:LGon19 [[file:Biblio/LGon19.pdf][New goods with new attributes (WP)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{LGon19,
+  title={New goods with new attributes: combining revealed and stated
+                  preferences to assess the effect of a novel quality
+                  label in the food industry},
+  author={Lacaze, Mar{\'\i}a Victoria and Gonz{\'a}lez, Julia},
+  year={2019}
+}
+#+end_src
+
+- Jean-sauveur.
+- Working paper not published for the moment about the creation of new
+  goods with new attributes, which is done by the creation of
+  Marsannay /premier cru/.
+
+** Geographical Indications
+*** cite:MRos78 [[file:Biblio/MRos78.pdf][Monopoly and product quality]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{MRos78,
+  title={Monopoly and product quality},
+  author={Mussa, Michael and Sherwin Rosen},
+  journal={Journal of Economic Theory},
+  volume={18},
+  number={},
+  pages={301--317},
+  year={1978}
+}
+#+end_src
+
+- Jean-sauveur
+- Monopole et biais dans la provision de qualité
+- Papier qui fit très bien avec l'analyse des indications
+  géographiques
+
+*** cite:Stee90 [[file:Biblio/Stee90.pdf][Quality perception process]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Stee90,
+  title={Conceptual model of the quality perception process},
+  author={Steenkamp, Jan-Benedict EM},
+  journal={Journal of Business research},
+  volume={21},
+  number={4},
+  pages={309--333},
+  year={1990},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Monia.
+- The importance of subjective view for quality perception,
+  particularly stringent for Geographical Indications.
+
+*** cite:LBad08 [[file:Biblio/LBad08.pdf][Agricultural production clubs]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{LBad08,
+  title={Agricultural production clubs: Viability and welfare
+                  implications},
+  author={Langinier, Corinne and Babcock, Bruce A},
+  journal={Journal of Agricultural \& Food Industrial Organization},
+  volume={6},
+  number={1},
+  year={2008},
+  publisher={De Gruyter}
+}
+#+end_src
+
+- Jean-sauveur.
+- About the optimal size of a GI club: "If club members can erect
+  barriers to entry, an optimal size of the club exists."
+
+*** cite:MMos12 [[file:Biblio/MMos12.pdf][Quality certification by Geographical Indications (ERAE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{MMos12,
+  title={Quality certification by geographical indications, trademarks
+                  and firm reputation},
+  author={Menapace, Luisa and Moschini, GianCarlo},
+  journal={European Review of Agricultural Economics},
+  volume={39},
+  number={4},
+  pages={539--566},
+  year={2012},
+  publisher={Oxford Univ Press}
+}
+#+end_src
+
+- Jean-sauveur
+- Ils montrent que, malgré la possibilité pour les producteurs de
+  faire leur propre trademark, la présence d'une certification
+  géographique augmente l'efficacité de la réputation pour signaler la
+  qualité.
+- La certification permet de diminuer les coûts de l'investissement en
+  réputation.
+- Ceux pour qui la réputation est basée sur une marque sont alors
+  réticents à l'arrivée d'une certification, même si ils peuvent en
+  profiter.
+
+*** cite:DSwi14 [[file:Biblio/Choi98.pdf][Political economy of geographical indications (AAWE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{DSwi14,
+  title={The political economy of Geographical Indications},
+  author={Deconinck, Koen and Swinnen, Johan},
+  journal={AAWE working paper No 174},
+  year={2014}
+}
+#+end_src
+
+- Jean-sauveur
+- Il y a une idée de centralité de l'AOC et que les consommateurs
+  n'ont de signal que sur la qualité.
+- Ils se posent la question de l'extension de l'aire d'appellation et
+  le process institutionnel qui permet de le déterminer. Il y a une
+  taille optimale sous-jacente de l'AOC qui est un peu la question que
+  l'on pose.
+
+*** cite:BDub17 [[file:Biblio/BDub17.pdf][Consumer brand preference (ARE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{BDub17,
+  title={The formation of consumer brand preferences},
+  author={Bronnenberg, Bart J and Dub{\'e}, Jean-Pierre},
+  journal={Annual Review of Economics},
+  volume={9},
+  pages={353--382},
+  year={2017},
+  publisher={Annual Reviews}
+}
+#+end_src
+
+- Stephan
+- General survey paper about the empirical results of brand
+  reputations
+- p374, it deals with umbrella branding
+
+*** cite:GFin17 [[file:Biblio/GFin17.pdf][New Geographical Indication in Oregon (JWE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{GFin17,
+  title={Price Effects of Establishing a New Sub-AVA within Oregon's
+                  Willamette Valley AVA},
+  author={Gokcekus, Omer and Finnegan, Clare M},
+  journal={Journal of Wine Economics},
+  volume={12},
+  number={4},
+  pages={345},
+  year={2017},
+  publisher={Cambridge University Press}
+}
+#+end_src
+
+- Jean-sauveur
+- Paper very close to ours!
+- In this study, we argue that the establishment of sub-AVAs in the
+  Willamette Valley was part of a dynamic process, an act of
+  reclassification by “better” wineries to distinguish themselves from
+  “lesser” wineries and ultimately collect higher regional reputation
+  premiums. À la Douglas (1986, 108), the people make new kinds of
+  institutions, the new institutions make new labels, and the new
+  labels make new kinds of people. Accordingly, we put forward the
+  following hypothesis: Establishing sub-AVAs was economically
+  beneficial for the wineries included in these new
+  classifications. By differentiating themselves, well-established
+  wineries with good reputations among wine critics and consumers were
+  able to collect higher regional reputation premiums.
+
+*** cite:YBMZ17 [[file:Biblio/YBMZ17.pdf][Quality in nested names (AJAE)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{YBMZ17,
+  title={What is in a Name? Information, Heterogeneity, and Quality in
+                  a Theory of Nested Names},
+  author={Yu, Jianyu and Bouamra-Mechemache, Zohra and Zago, Angelo},
+  journal={American Journal of Agricultural Economics},
+  volume={100},
+  number={1},
+  pages={286--310},
+  year={2017},
+  publisher={Oxford University Press}
+}
+#+end_src
+
+- Jean-sauveur
+- The economics theory of Nested names
+- At Marsannay, we are clearly in such a situation in regard to the
+  other wines from burgundy. The authors say: "the Burgundy
+  classification system is the most sophisticated, with a very long
+  tradition of classifying vineyards to find the best quality climats,
+  that is, plots of land. Burgundy’s soil quality is very heteroge-
+  neous and this, together with differences in altitude and
+  exposition, has always led to wines of “almost unpredictable
+  quality” (Johnson and Robinson 2013). However, over time traders
+  have learned to distinguish the quality of wines coming from
+  different climats, and so the prices of the grapes have reflected
+  the quality potential of different plots. The best plots were those
+  able to give quality wines consistently across years with different
+  weather conditions. In short, nowadays pundits continue to argue for
+  the Bungundy classification system, given that “the general validity
+  of the hierarchy is well supported by the market” (Lewin 2010)."
+- An interesting case is the appellation of Montagny, on the Cote
+  Chalonnaise, where producers between 1989 and 1991 voluntarily
+  decided to reduce the number of Premiers Crus, that is, the
+  second-tier climats. “There were plenty of private and public spats
+  over which vineyards kept their status [..] but the fact remains
+  that the winemakers had seen over the preceeding decades that
+  certain plots in Montagny made unquestionably better wines than
+  others,” (Anson 2016).
+
+** Umbrella branding / brand extensions
+*** cite:Chin96 [[file:Biblio/Chin96.pdf][New brand extension on market structure (ML)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Chin96,
+  title={Investigating the effects of a line extension or new brand
+                  introduction on market structure},
+  author={Chintagunta, Pradeep K},
+  journal={Marketing Letters},
+  volume={7},
+  number={4},
+  pages={319--328},
+  year={1996},
+  publisher={Springer}
+}
+#+end_src
+
+- Monia
+- Among first paper on brand extension cited by cite:CSCa19.
+
+*** cite:Choi98 [[file:Biblio/Choi98.pdf][Brand extension as informational leverage (RES)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Choi98,
+  title={Brand extension as informational leverage},
+  author={Choi, Jay Pil},
+  journal={The Review of Economic Studies},
+  volume={65},
+  number={4},
+  pages={655--669},
+  year={1998},
+  publisher={Wiley-Blackwell}
+}
+#+end_src
+
+- Stephan
+- Seminal paper about the interest of brand extension in the case of
+  asymmetry of information.
+- Must be cited in our paper! even if they are more recent 2007
+  working paper (not published actually) [[file:Biblio/CJeo07.pdf][link to the WP]].
+
+*** cite:Cabr00 [[file:Biblio/PRic02.pdf][Stretching firm and brand reputation (RAND)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Cabr00,
+  title={Stretching firm and brand reputation},
+  author={Cabral, Luis MB},
+  journal={RAND Journal of Economics},
+  pages={658--673},
+  year={2000},
+  publisher={JSTOR}
+}
+#+end_src
+
+- Stephan
+- Another theoretical paper about brand extension in the context of
+  imperfect information.
+
+*** cite:Ande02 [[file:Biblio/Ande02.pdf][Pooling reputations (IJIO)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Ande02,
+  title={Pooling reputations},
+  author={Andersson, Fredrik},
+  journal={International Journal of Industrial Organization},
+  volume={20},
+  number={5},
+  pages={715--730},
+  year={2002},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Stephan
+- Theoretical model from IO that shows economies of scope in carrying
+  reputation which can provide some rational for the use of /Premier
+  Crus/ for the wines of Marsannay.
+- It is also shown that a reputation for producing high quality of an
+  old good may be necessary to introduce and maintain the production
+  of a new good.
+
+*** cite:PRic02 [[file:Biblio/PRic02.pdf][Economics of brand stretching (JoB)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{PRic02,
+  title={The simple economics of brand stretching},
+  author={Pepall, Lynne M and Richards, Daniel J},
+  journal={The Journal of Business},
+  volume={75},
+  number={3},
+  pages={535--552},
+  year={2002},
+  publisher={JSTOR}
+}
+#+end_src
+
+- Monia
+- Brand stretching is like brand extension, it is what we study when
+  the level /premier cru/ is extended to Marsannay.
+- Simple theoretical model that can be used to interpret our results
+
+*** cite:Czel03 [[file:Biblio/Czel03.pdf][Consumer attitude toward brand extension (IJRM)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Czel03,
+  title={Consumer attitude toward brand extensions: an integrative
+                  model and research propositions},
+  author={Czellar, Sandor},
+  journal={International Journal of Research in Marketing},
+  volume={20},
+  number={1},
+  pages={97--115},
+  year={2003},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Monia
+- A kind of survey paper in marketing about the different consumer's
+  reaction to brand extensions.
+- The creation of /premiers crus/ in Marsannay can be seen as a brand
+  extension
+
+*** cite:Henr08 [[file:Biblio/Henr08.pdf][Consumer innovativeness and brand extension (JPBM)]] 
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Henr08,
+  title={Consumer innovativeness and consumer acceptance of brand
+                  extensions},
+  author={Henry Xie, Yu},
+  journal={Journal of Product \& Brand Management},
+  volume={17},
+  number={4},
+  pages={235--243},
+  year={2008},
+  publisher={Emerald Group Publishing Limited}
+}
+#+end_src
+
+- Monia
+- Conceptual paper in marketing about the importance of consumer
+  characteristics (innovativeness in particular) to predict their
+  reactions to brand extensions.
+
+*** cite:HPei08 [[file:Biblio/HPei08.pdf][Umbrella branding and quality provision (IJIO)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{HPei08,
+  title={Umbrella branding and the provision of quality},
+  author={Hakenes, Hendrik and Peitz, Martin},
+  journal={International Journal of Industrial Organization},
+  volume={26},
+  number={2},
+  pages={546--556},
+  year={2008},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Stephan
+- Theoretical model from IO that shows that umbrella branding
+  mitigates the moral hazard problem
+
+*** cite:HPei09 [[file:Biblio/HPei09.pdf][Umbrella branding and external certification (EER)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{HPei09,
+  title={Umbrella branding and external certification},
+  author={Hakenes, Hendrik and Peitz, Martin},
+  journal={European Economic Review},
+  volume={53},
+  number={2},
+  pages={186--196},
+  year={2009},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Stephan
+- Companion paper from the previous one but maybe more interesting as
+  the question of external certification is posed
+
+*** cite:HDMC11 [[file:Biblio/HDMC11.pdf][Extending brands to lower and higher quality (JoM)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{HDMC11,
+  title={The asymmetric effects of extending brands to lower and higher quality},
+  author={Heath, Timothy B and DelVecchio, Devon and McCarthy, Michael S},
+  journal={Journal of Marketing},
+  volume={75},
+  number={4},
+  pages={3--20},
+  year={2011},
+  publisher={American Marketing Association}
+}
+#+end_src
+
+- Monia.
+- A robust asymmetry emerges in which higher-quality extensions
+  improve brand evaluation far more than lower-quality extensions
+  damage it. The asymmetry prevails across various perceptual and
+  evaluative dimensions, multiple product classes, numerous fictitious
+  and real brands that differ on various dimensions (familiarity,
+  liking, personality, and prestige), and consumer regulatory
+  focus. Group and individual-level tests show that the standard
+  asymmetry is the modal pattern (though not universal) and that it is
+  associated with two primary underlying processes: (1) opponent
+  processes produced by lower-quality extensions whose negative
+  quality-association effects are tempered by positive variety effects
+  (in general, consumers prefer broader product lines) and (2)
+  best-of-brand processing, in which consumers consider higher-quality
+  extensions more relevant to brand evaluation than lower-quality
+  extensions.
+
+*** cite:Moor12 [[file:Biblio/Moor12.pdf][Brand extension signal product quality? (MS)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Moor12,
+  title={Can brand extension signal product quality?},
+  author={Moorthy, Sridhar},
+  journal={Marketing science},
+  volume={31},
+  number={5},
+  pages={756--770},
+  year={2012},
+  publisher={INFORMS}
+}
+#+end_src
+
+- Monia
+- Theoretical model from marketing, with game theory.
+- With empirical off-equilibrium beliefs, two necessary conditions for
+  brand extension to signal product quality are identified: (i)
+  consumers must perceive old and new products of the firm to be
+  positively correlated in quality, and (ii) at least some consumers
+  must identify with brands and not the firm behind the brands. Even
+  with these conditions in place, the signaling argument is fragile:
+  firm observability of past performance diminishes brand extension’s
+  signaling capability; an arbitrarily small probability of failure
+  for good products eliminates it. My results suggest that, going
+  forward, the case for brand extension must rest on foundations other
+  than signaling product quality.
+
+*** cite:Rote13 [[file:Biblio/Rote13.pdf][Firm altruism and brand extension (MS)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{Rote13,
+  title={Expected Firm Altruism, Quality Provision, and Brand Extensions},
+  author={Rotemberg, Julio J},
+  journal={Marketing Science},
+  volume={32},
+  number={2},
+  pages={325--341},
+  year={2013},
+  publisher={INFORMS}
+}
+#+end_src
+
+- Monia
+- Some interesting thoughts about the consumer effects of brand
+  extension. It show the importance of credibility in brand
+  extensions.
+
+*** cite:GLRW17 [[file:Biblio/Trie/GLRW17.pdf][Net benefits of collective reputation (FP)]]
+
+#+begin_src bibtex :tangle ./Biblio.bib :exports none
+@article{GLRW17,
+  title={Evaluating the net benefits of collective reputation: The
+                  case of Bordeaux wine},
+  author={Gergaud, Olivier and Livat, Florine and Rickard, Bradley and
+                  Warzynski, Frederic},
+  journal={Food Policy},
+  volume={71},
+  pages={8--16},
+  year={2017},
+  publisher={Elsevier}
+}
+#+end_src
+
+- Stephan
+- Collective reputation from Tirole 1996. Linked to Lalonde and Smith
+  (1997, 1998). Here, the collective reputation refers to the
+  appellation name and individual reputations at the farm level are
+  proxied by the average ratings the wines have received from a
+  popular wine guide.
+- C'est un modèle en système imbriqué, où la réputation agrégée dépend
+  des réputations individuelles et les réputations individuelles
+  dépendent de la réputation agrégée. Il n'ont pas de bons instruments
+  pour les réputations individuelles donc ils ne s'intéressent qu'à
+  l'effet de la réputation agrégée sur les individuelles
+- Ils se servent de l'imbrication des différentes échelles des
+  appellations contre l'endogénéité de la réputation
+  collective. L'appréciation de Bordeaux est instrumentée par les
+  appréciations des autres régions viticoles à cette échelle. On a
+  quelque part une sorte de modèle hiérarchiques à 2 étapes.
+
+** Reference                                 :noheading:
+   
+   bibliographystyle:../Softwares/latex/erae
+   bibliography:Biblio.bib
+
+#+LATEX: \clearpage\appendix
+
+* Presentation                               :noexport:
+  :PROPERTIES:
+  :EXPORT_FILE_NAME:     Presentation
+  :EXPORT_LATEX_CLASS:   PresSemin
+  :EXPORT_LATEX_HEADER:  \renewcommand{\texttt}{\textcolor{beamer@blendedblue}} \renewcommand{\footnotesize}{\scriptsize} \addbibresource{Perso.bib} \renewcommand*{\bibfont}{\scriptsize}
+  :EXPORT_BEAMER_HEADER: \usepackage{bm, tikz, adjustbox, amsmath, dsfont, dcolumn, import} \newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
+  :EXPORT_LATEX_HEADER:  \usepackage{handoutWithNotes} \pgfpagesuselayout{3 on 1 with notes}[a4paper,border shrink=10mm]
+  :EXPORT_OPTIONS:       TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc toc:nil H:2 author:t
+  :EXPORT_TITLE:         The Value of Geographical Indications with Unobserved /terroir/ Effects
+  :EXPORT_AUTHOR:        Jean-Sauveur Ay \and Julie Le Gallo \\[.5cm] \texttt{UMR CESAER}\\[.5cm] AgroSup Dijon, Inra, Univ. Bourgogne-Franche-Comté  
+  :EXPORT_DATE:          \null
+  :END:
+** 1 -- Introduction
+*** Economics of Geographical Indications (GIs)
+
+    - =Accomodative views= :
+
+    GIs proxy well and at low cost the unobservable quality attributes
+    of complex agricultural products
+
+#+LaTeX: \vspace{.5cm}
+
+    - =Contrarian views= :
+
+    GIs restrict supply and create rents for landowners through
+    artificially segmented agricultural markets
+
+*** \null
+
+#+BEGIN_CENTER
+\vspace{-.5cm}
+\includegraphics[trim=0cm 0cm 0cm 0cm, clip=true, scale= .15]{./Figures/CM}
+#+END_CENTER
+
+*** Research statement
+
+    We test the =empirical relevance of these two views= through land
+    price determinants on =Burgundy vineyard sales=
+#+LaTeX: \vspace{.75cm}
+
+    =Question:= What are the respective effects of /terroir/ and GIs
+    to explain observed =vineyard prices variations= ?\\[.5cm]
+
+    - =Accomodative= : low value of GI with /terroir/ controlled
+    - =Contrarian= : high value of GI with /terroir/ controlled
+
+*** Empirical Literature
+
+    =Strong effect of Geographical Indications= in all studies
+
+#+LaTeX: \vspace{.5cm}
+
+    @@latex: \texttt{Insignificant effect of soil \emph{terroir}}@@
+    - Gergaud and Ginsburgh (EJ 2008), Bordeaux wines
+    - Cross et al. (AER 2011), Oregon vineyards 
+
+#+LaTeX: \vspace{.5cm}
+
+    @@latex: \texttt{Strong effect of climate \emph{terroir}}@@
+    - Ashenfelter et al. (Chance 1995), Bordeaux wines
+    - Ashenfelter and Storchmann (RES 2010), Mosell vineyards
+
+*** Our contribution
+
+    Typical available data do not contain all /terroir/ variables
+    (=omitted variable bias=) or /terroir/ is =measured with errors=
+    due to downscaling (particular case of omitted variable)
+
+#+BEGIN_CENTER
+    $\Rightarrow$ =Full terroir is not observed= in hedonic models
+#+END_CENTER
+
+#+LaTeX: \pause
+
+    We propose an original identification strategy based on the
+    =spatial continuity= of /terroir/ effects (biophysical patterns)
+ 
