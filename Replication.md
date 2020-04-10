@@ -1,96 +1,50 @@
-
-# Table of Contents
-
-1.  [Data preparation](#orge0d9074)
-    1.  [Individual data](#org9ec26ef)
-    2.  [Scenario data](#org0ef97e2)
-    3.  [AOC variables](#org76c6ee7)
-    4.  [Wine dummies](#org9a9ad6b)
-    5.  [Average score](#org061807b)
-    6.  [Score variance](#orgd42a077)
-    7.  [Summary Table](#orgaf12fed)
-2.  [Regression analysis](#org20d7ef0)
-    1.  [Table 2 of the paper](#org7af9522)
-    2.  [Table 3 of the paper](#org3ad4113)
-    3.  [Table 4 of the paper](#org553d5ef)
-3.  [Figures](#org523c45e)
-    1.  [Figure 1](#org3251473)
-    2.  [Figure 2](#orga3d83f5)
-4.  [Appendix](#org55d4934)
-    1.  [Function for ternary plots](#orgc6c753c)
-
----
-title:  Willingness-To-Pay for Reshuffling Geographical Indications
-author: Monia Saïdi, Jean-Sauveur Ay, Stephan Marette, Christophe Martin
----
-
-# Abstract
-
 <div class="abstract">
-This file contents the Replication Material (RM) associated to the
-article named in the title and under revision in the *Journal of Wine
-Economics*.  Data, code, figures and tables are under the copyright
-license GNU GPL V3, which means that license notices must be
-preserved.  Raw data are available from the Inrae dataverse server
-[https://data.inrae.fr](https://doi.org/10.15454/ZZWQMN).  The most recent version of this document and
-the detailed experimental protocol are available from the remote
-repository [https://github.com/jsay/reshufGI](https://github.com/jsay/reshufGI/blob/master/Replication.pdf).
+This file contents the Replication Material (RM) associated to the article named in the title and under revision in the *Journal of Wine Economics*. Data, code, figures and tables are under the copyright license GNU GPL V3, which means that license notices must be preserved. Raw data are available from the Inrae dataverse server [https://data.inrae.fr](https://doi.org/10.15454/ZZWQMN). The most recent version of this document and the detailed experimental protocol are available from the remote repository [https://github.com/jsay/reshufGI](https://github.com/jsay/reshufGI/blob/master/Replication.pdf).
 
 </div>
 
 
 # Table of Contents
 
-1.  [Data preparation](#orge0d9074)
-    1.  [Individual data](#org9ec26ef)
-    2.  [Scenario data](#org0ef97e2)
-    3.  [AOC variables](#org76c6ee7)
-    4.  [Wine dummies](#org9a9ad6b)
-    5.  [Average score](#org061807b)
-    6.  [Score variance](#orgd42a077)
-    7.  [Summary Table](#orgaf12fed)
-2.  [Regression analysis](#org20d7ef0)
-    1.  [Table 2 of the paper](#org7af9522)
-    2.  [Table 3 of the paper](#org3ad4113)
-    3.  [Table 4 of the paper](#org553d5ef)
-3.  [Figures](#org523c45e)
-    1.  [Figure 1](#org3251473)
-    2.  [Figure 2](#orga3d83f5)
-4.  [Appendix](#org55d4934)
-    1.  [Function for ternary plots](#orgc6c753c)
+1.  [Data preparation](#org295a5a8)
+    1.  [Individual data](#orgbc8a584)
+    2.  [Scenario data](#org3541082)
+    3.  [AOC variables](#org0abe92e)
+    4.  [Wine dummies](#org71ef823)
+    5.  [Average score](#orgc2b7ee8)
+    6.  [Score variance](#orgc349610)
+    7.  [Summary Table](#org0db7604)
+2.  [Regression analysis](#org849099e)
+    1.  [Table 2 of the paper](#org3204826)
+    2.  [Table 3 of the paper](#orgf3ed1be)
+    3.  [Table 4 of the paper](#org7641be6)
+3.  [Figures](#orgbe199af)
+    1.  [Figure 1](#orge106a1e)
+    2.  [Figure 2](#org1a1892c)
+4.  [Appendix](#orgef2946d)
+    1.  [Function for ternary plots](#orgfa03308)
 
 
-<a id="orge0d9074"></a>
+<a id="org295a5a8"></a>
 
 # Data preparation
 
 
-<a id="org9ec26ef"></a>
+<a id="orgbc8a584"></a>
 
 ## Individual data
 
-The raw data table comes from the file `Data/WTPraw.csv` that
-contains 125 rows (one row for each participant) and 37 columns
-(one for each question/ answer).  The first variable is the ID of
-the participant, the second variable is the result from the
-simulation at the beginning of the experiment in order to explain
-the BDM mechanism, the next 15 variables (between column 3 and
-column 17) correspond to the declared Willingness-To-Pay (WTP)
-that were asked for 3 different GI levels (`REG`, `VIL`, and
-`PCRU`) for each of the 5 different scenarios proposed to each
-participants.  The last 20 columns corresponds to intermediary
-questions that could be used to control participants'
-heterogeneity.  We re-code below the names of the WTPs variables
-to melt them and obtain a pooled data table of 1875 rows and 3
-columns.
+The raw data table comes from the file `Data/WTPraw.csv` that contains 125 rows (one row for each participant) and 37 columns (one for each question/ answer). The first variable is the ID of the participant, the second variable is the result from the simulation at the beginning of the experiment in order to explain the BDM mechanism, the next 15 variables (between column 3 and column 17) correspond to the declared Willingness-To-Pay (WTP) that were asked for 3 different GI levels (`REG`, `VIL`, and `PCRU`) for each of the 5 different scenarios proposed to each participants. The last 20 columns corresponds to intermediary questions that could be used to control participants' heterogeneity. We re-code below the names of the WTPs variables to melt them and obtain a pooled data table of 1875 rows and 3 columns.
 
-    library(data.table)
-    dim(DT1 <- fread("Data/WTPraw.csv"))
-    names(DT1)[ 3: 17] <- paste0("X", substr(names(DT1)[ 3: 17], 2, 5))
-    dim(LDT1 <- melt(DT1, id.vars= "ID", measure.vars= names(DT1)[ 3: 17],
-                     variable.name= "CHOIX", value.name= "WTP"))
-    LDT1$IDST <- paste(substr(LDT1$ID, 1, 3),
-                       substr(LDT1$CHOIX, 1, 2), sep= "")
+```R
+library(data.table)
+dim(DT1 <- fread("Data/WTPraw.csv"))
+names(DT1)[ 3: 17] <- paste0("X", substr(names(DT1)[ 3: 17], 2, 5))
+dim(LDT1 <- melt(DT1, id.vars= "ID", measure.vars= names(DT1)[ 3: 17],
+                 variable.name= "CHOIX", value.name= "WTP"))
+LDT1$IDST <- paste(substr(LDT1$ID, 1, 3),
+                   substr(LDT1$CHOIX, 1, 2), sep= "")
+```
 
     data.table 1.11.4  Latest news: http://r-datatable.com
     
@@ -99,24 +53,18 @@ columns.
     [1] 1875    3
 
 
-<a id="org0ef97e2"></a>
+<a id="org3541082"></a>
 
 ## Scenario data
 
-We also use the file `Data/SCCraw.csv` about the characteristics
-of the scenario of GI changes that we propose to the participants.
-We perform 10 group sessions with 5 scenarios on each, so the data
-have 50 rows.  Every scenarios is replicated on average 4 times,
-as we have 14 different scenario about of GI changes on the area
-of *Marsannay*.  The variable `STRUCT` reports 28 unique values
-because the 14 scenarios are present with and without the bottle
-of *Fixin Premier Cru*, each appear twice.  We merge the scenario
-characteristics with previous WTP data.
+We also use the file `Data/SCCraw.csv` about the characteristics of the scenario of GI changes that we propose to the participants. We perform 10 group sessions with 5 scenarios on each, so the data have 50 rows. Every scenarios is replicated on average 4 times, as we have 14 different scenario about of GI changes on the area of *Marsannay*. The variable `STRUCT` reports 28 unique values because the 14 scenarios are present with and without the bottle of *Fixin Premier Cru*, each appear twice. We merge the scenario characteristics with previous WTP data.
 
-    dim(SCC <- fread("Data/SCCraw.csv"))
-    length(unique(SCC$STRUCT))
-    SCC$IDST <- paste0(substr(SCC$GROUPE, 1, 3), "X", substr(SCC$GROUPE, 5, 5))
-    dim(DatPool <- merge(LDT1, SCC[, -1], by= "IDST"))
+```R
+dim(SCC <- fread("Data/SCCraw.csv"))
+length(unique(SCC$STRUCT))
+SCC$IDST <- paste0(substr(SCC$GROUPE, 1, 3), "X", substr(SCC$GROUPE, 5, 5))
+dim(DatPool <- merge(LDT1, SCC[, -1], by= "IDST"))
+```
 
     [1] 50  2
     
@@ -125,30 +73,24 @@ characteristics with previous WTP data.
     [1] 1875    5
 
 
-<a id="org76c6ee7"></a>
+<a id="org0abe92e"></a>
 
 ## AOC variables
 
-We compute 3 series of variables that are used in the
-regressions.  The first series is about the GI variables that are
-both coded as `factor` in the `AOC` variable and as `dummies` in
-the `AOCREG`, `AOCVIL`, and `AOCPCR` variables.  Next, we compute
-the number of wine bottle in each GI for each scenario for the
-`STRUCT` variable from scenarios characteristics.  Finally, we
-code the `FIXIN` dummy variable that equals to 1 for participant
-for which the *Fixin Premier Cru* was present.  The code below
-reports the distribution of dummy variables.
+We compute 3 series of variables that are used in the regressions. The first series is about the GI variables that are both coded as `factor` in the `AOC` variable and as `dummies` in the `AOCREG`, `AOCVIL`, and `AOCPCR` variables. Next, we compute the number of wine bottle in each GI for each scenario for the `STRUCT` variable from scenarios characteristics. Finally, we code the `FIXIN` dummy variable that equals to 1 for participant for which the *Fixin Premier Cru* was present. The code below reports the distribution of dummy variables.
 
-    DatPool$AOC <- factor(substr(DatPool$CHOIX, 3, 5),
-                          levels= c("REG", "VIL", "PCR"))
-    DatPool$AOCREG <- ifelse(DatPool$AOC== "REG", 1, 0)
-    DatPool$AOCVIL <- ifelse(DatPool$AOC== "VIL", 1, 0)
-    DatPool$AOCPCR <- ifelse(DatPool$AOC== "PCR", 1, 0)
-    DatPool$NBREG <- as.numeric(substr(DatPool$STRUCT, 5, 5))
-    DatPool$NBVIL <- as.numeric(substr(DatPool$STRUCT, 3, 3))
-    DatPool$NBPCR <- as.numeric(substr(DatPool$STRUCT, 1, 1))
-    DatPool$FIXIN <- ifelse(rowSums(DatPool[, 10: 12])== 11, 1, 0)
-    sapply(DatPool[, c(7: 9, 13)], table, simplify= TRUE)
+```R
+DatPool$AOC <- factor(substr(DatPool$CHOIX, 3, 5),
+                      levels= c("REG", "VIL", "PCR"))
+DatPool$AOCREG <- ifelse(DatPool$AOC== "REG", 1, 0)
+DatPool$AOCVIL <- ifelse(DatPool$AOC== "VIL", 1, 0)
+DatPool$AOCPCR <- ifelse(DatPool$AOC== "PCR", 1, 0)
+DatPool$NBREG <- as.numeric(substr(DatPool$STRUCT, 5, 5))
+DatPool$NBVIL <- as.numeric(substr(DatPool$STRUCT, 3, 3))
+DatPool$NBPCR <- as.numeric(substr(DatPool$STRUCT, 1, 1))
+DatPool$FIXIN <- ifelse(rowSums(DatPool[, 10: 12])== 11, 1, 0)
+sapply(DatPool[, c(7: 9, 13)], table, simplify= TRUE)
+```
 
     
       AOCREG AOCVIL AOCPCR FIXIN
@@ -156,47 +98,46 @@ reports the distribution of dummy variables.
     1    625    625    625   975
 
 
-<a id="org9a9ad6b"></a>
+<a id="org71ef823"></a>
 
 ## Wine dummies
 
-We report the code to compute the wine dummies in each scenario.
-We can verify that the code is good by the reported distribution:
-each wine is proposed 625 times (except *Fixin Premier Cru* that
-is only for 60% of participants).
+We report the code to compute the wine dummies in each scenario. We can verify that the code is good by the reported distribution: each wine is proposed 625 times (except *Fixin Premier Cru* that is only for 60% of participants).
 
-    DatPool$VIN0 <- ifelse(DatPool$FIXIN== 1 & DatPool$AOC== "PCR", 1, 0)
-    DatPool$VIN1 <- ifelse(DatPool$FIXIN== 1,
-                    ifelse(DatPool$NBPCR>= 2 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 1 & DatPool$AOC== "VIL", 1, 0)),
-                    ifelse(DatPool$NBPCR>= 1 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 0 & DatPool$AOC== "VIL", 1, 0)))
-    DatPool$VIN2 <- ifelse(DatPool$FIXIN== 1,
-                    ifelse(DatPool$NBPCR>= 3 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 2 & DatPool$AOC== "VIL", 1, 0)),
-                    ifelse(DatPool$NBPCR>= 2 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 1 & DatPool$AOC== "VIL", 1, 0)))
-    DatPool$VIN3 <- ifelse(DatPool$FIXIN== 1,
-                    ifelse(DatPool$NBPCR>= 4 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 3 & DatPool$AOC== "VIL", 1, 0)),
-                    ifelse(DatPool$NBPCR>= 3 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 2 & DatPool$AOC== "VIL", 1, 0)))
-    DatPool$VIN4 <- ifelse(DatPool$FIXIN== 1,
-                    ifelse(DatPool$NBPCR>= 5 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 4 & DatPool$AOC== "VIL", 1, 0)),
-                    ifelse(DatPool$NBPCR>= 4 & DatPool$AOC== "PCR", 1,
-                    ifelse(DatPool$NBPCR<= 3 & DatPool$AOC== "VIL", 1, 0)))
-    DatPool$VIN5 <- ifelse(DatPool$AOC== "VIL", 1, 0)
-    DatPool$VIN6 <- ifelse(DatPool$AOC== "VIL", 1, 0)
-    DatPool$VIN7 <- ifelse(DatPool$NBREG>= 4 & DatPool$AOC== "REG", 1,
-                    ifelse(DatPool$NBREG<  4 & DatPool$AOC== "VIL", 1, 0))
-    DatPool$VIN8 <- ifelse(DatPool$NBREG>= 3 & DatPool$AOC== "REG", 1,
-                    ifelse(DatPool$NBREG<  3 & DatPool$AOC== "VIL", 1, 0))
-    DatPool$VIN9 <- ifelse(DatPool$NBREG== 1,
-                    ifelse(DatPool$AOC== "VIL", 1, 0),
-                    ifelse(DatPool$AOC== "REG", 1, 0))
-    DatPool$VIN10<- ifelse(DatPool$AOC== "REG", 1, 0)
-    sapply(DatPool[, 14: 24], table)
+```R
+DatPool$VIN0 <- ifelse(DatPool$FIXIN== 1 & DatPool$AOC== "PCR", 1, 0)
+DatPool$VIN1 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 2 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 1 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 1 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 0 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN2 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 3 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 2 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 2 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 1 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN3 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 4 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 3 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 3 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 2 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN4 <- ifelse(DatPool$FIXIN== 1,
+                ifelse(DatPool$NBPCR>= 5 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 4 & DatPool$AOC== "VIL", 1, 0)),
+                ifelse(DatPool$NBPCR>= 4 & DatPool$AOC== "PCR", 1,
+                ifelse(DatPool$NBPCR<= 3 & DatPool$AOC== "VIL", 1, 0)))
+DatPool$VIN5 <- ifelse(DatPool$AOC== "VIL", 1, 0)
+DatPool$VIN6 <- ifelse(DatPool$AOC== "VIL", 1, 0)
+DatPool$VIN7 <- ifelse(DatPool$NBREG>= 4 & DatPool$AOC== "REG", 1,
+                ifelse(DatPool$NBREG<  4 & DatPool$AOC== "VIL", 1, 0))
+DatPool$VIN8 <- ifelse(DatPool$NBREG>= 3 & DatPool$AOC== "REG", 1,
+                ifelse(DatPool$NBREG<  3 & DatPool$AOC== "VIL", 1, 0))
+DatPool$VIN9 <- ifelse(DatPool$NBREG== 1,
+                ifelse(DatPool$AOC== "VIL", 1, 0),
+                ifelse(DatPool$AOC== "REG", 1, 0))
+DatPool$VIN10<- ifelse(DatPool$AOC== "REG", 1, 0)
+sapply(DatPool[, 14: 24], table)
+```
 
     
       VIN0 VIN1 VIN2 VIN3 VIN4 VIN5 VIN6 VIN7 VIN8 VIN9 VIN10
@@ -204,43 +145,44 @@ is only for 60% of participants).
     1  325  625  625  625  625  625  625  625  625  625   625
 
 
-<a id="org061807b"></a>
+<a id="orgc2b7ee8"></a>
 
 ## Average score
 
-To compute the average score corresponding to each GI, we make the
-analysis for each GIs and then aggregate.
+To compute the average score corresponding to each GI, we make the analysis for each GIs and then aggregate.
 
-    DatPool$REGscr <- ifelse(DatPool$NBREG== 1, 0,
-                      ifelse(DatPool$NBREG== 2, .5,
-                      ifelse(DatPool$NBREG== 3, 1, 1.5)))
-    DatPool$VILscr <- ifelse(DatPool$NBREG== 1,
-                       ifelse(DatPool$NBVIL== 6, 3.5, 3),
-                      ifelse(DatPool$NBREG== 2,
-                       ifelse(DatPool$NBVIL== 4, 3.5,
-                       ifelse(DatPool$NBVIL== 5, 4, 4.5)),
-                      ifelse(DatPool$NBREG== 3,
-                       ifelse(DatPool$NBVIL== 3, 4,      
-                       ifelse(DatPool$NBVIL== 4, 4.5,
-                       ifelse(DatPool$NBVIL== 5, 5, 5.5))),
-                       ifelse(DatPool$NBVIL== 3, 5,
-                       ifelse(DatPool$NBVIL== 4, 5.5,
-                       ifelse(DatPool$NBVIL== 5, 6,
-                       ifelse(DatPool$NBVIL== 6, 6.5, 4.5)))))))
-    DatPool$PCRscr <- ifelse(DatPool$FIXIN== 1,
-                      ifelse(DatPool$NBPCR== 1, 10,
-                      ifelse(DatPool$NBPCR== 2, 9.5,
-                      ifelse(DatPool$NBPCR== 3, 9,
-                      ifelse(DatPool$NBPCR== 4, 8.5,
-                      ifelse(DatPool$NBPCR== 5, 8, 8))))),
-                      ifelse(DatPool$NBPCR== 1, 9,
-                      ifelse(DatPool$NBPCR== 2, 8.5,
-                      ifelse(DatPool$NBPCR== 3, 8,
-                      ifelse(DatPool$NBPCR== 4, 7.5, 7.5)))))
-    DatPool$MEAN <- ifelse(DatPool$AOC== "PCR", DatPool$PCRscr,
-                    ifelse(DatPool$AOC== "VIL", DatPool$VILscr,
-                           DatPool$REGscr))
-    sapply(DatPool[, 25: 28], summary)
+```R
+DatPool$REGscr <- ifelse(DatPool$NBREG== 1, 0,
+                  ifelse(DatPool$NBREG== 2, .5,
+                  ifelse(DatPool$NBREG== 3, 1, 1.5)))
+DatPool$VILscr <- ifelse(DatPool$NBREG== 1,
+                   ifelse(DatPool$NBVIL== 6, 3.5, 3),
+                  ifelse(DatPool$NBREG== 2,
+                   ifelse(DatPool$NBVIL== 4, 3.5,
+                   ifelse(DatPool$NBVIL== 5, 4, 4.5)),
+                  ifelse(DatPool$NBREG== 3,
+                   ifelse(DatPool$NBVIL== 3, 4,      
+                   ifelse(DatPool$NBVIL== 4, 4.5,
+                   ifelse(DatPool$NBVIL== 5, 5, 5.5))),
+                   ifelse(DatPool$NBVIL== 3, 5,
+                   ifelse(DatPool$NBVIL== 4, 5.5,
+                   ifelse(DatPool$NBVIL== 5, 6,
+                   ifelse(DatPool$NBVIL== 6, 6.5, 4.5)))))))
+DatPool$PCRscr <- ifelse(DatPool$FIXIN== 1,
+                  ifelse(DatPool$NBPCR== 1, 10,
+                  ifelse(DatPool$NBPCR== 2, 9.5,
+                  ifelse(DatPool$NBPCR== 3, 9,
+                  ifelse(DatPool$NBPCR== 4, 8.5,
+                  ifelse(DatPool$NBPCR== 5, 8, 8))))),
+                  ifelse(DatPool$NBPCR== 1, 9,
+                  ifelse(DatPool$NBPCR== 2, 8.5,
+                  ifelse(DatPool$NBPCR== 3, 8,
+                  ifelse(DatPool$NBPCR== 4, 7.5, 7.5)))))
+DatPool$MEAN <- ifelse(DatPool$AOC== "PCR", DatPool$PCRscr,
+                ifelse(DatPool$AOC== "VIL", DatPool$VILscr,
+                       DatPool$REGscr))
+sapply(DatPool[, 25: 28], summary)
+```
 
     
             REGscr VILscr PCRscr   MEAN
@@ -252,27 +194,29 @@ analysis for each GIs and then aggregate.
     Max.     1.500  6.500 10.000 10.000
 
 
-<a id="orgd42a077"></a>
+<a id="orgc349610"></a>
 
 ## Score variance
 
 In two step, as for the average score.
 
-    DatPool$REGvar <- ifelse(DatPool$NBREG== 1, 0,
-                      ifelse(DatPool$NBREG== 2, .5,
-                      ifelse(DatPool$NBREG== 3, 1, 1.667)))
-    DatPool$VILvar <- ifelse(DatPool$NBVIL== 6, 3.5,
-                      ifelse(DatPool$NBVIL== 5, 2.5,
-                      ifelse(DatPool$NBVIL== 4, 1.667,
-                      ifelse(DatPool$NBVIL== 3, 1, .5))))
-    DatPool$PCRvar <- ifelse(DatPool$NBPCR== 1 | DatPool$NBPCR== 0, 0,
-                      ifelse(DatPool$NBPCR== 2, .005,
-                      ifelse(DatPool$NBPCR== 3, .01,
-                      ifelse(DatPool$NBPCR== 4, .01667, .025))))* 100
-    DatPool$VAR <- ifelse(DatPool$AOC== "PCR", DatPool$PCRvar,
-                   ifelse(DatPool$AOC== "VIL", DatPool$VILvar,
-                           DatPool$REGvar))
-    sapply(DatPool[, 29: 32], summary)
+```R
+DatPool$REGvar <- ifelse(DatPool$NBREG== 1, 0,
+                  ifelse(DatPool$NBREG== 2, .5,
+                  ifelse(DatPool$NBREG== 3, 1, 1.667)))
+DatPool$VILvar <- ifelse(DatPool$NBVIL== 6, 3.5,
+                  ifelse(DatPool$NBVIL== 5, 2.5,
+                  ifelse(DatPool$NBVIL== 4, 1.667,
+                  ifelse(DatPool$NBVIL== 3, 1, .5))))
+DatPool$PCRvar <- ifelse(DatPool$NBPCR== 1 | DatPool$NBPCR== 0, 0,
+                  ifelse(DatPool$NBPCR== 2, .005,
+                  ifelse(DatPool$NBPCR== 3, .01,
+                  ifelse(DatPool$NBPCR== 4, .01667, .025))))* 100
+DatPool$VAR <- ifelse(DatPool$AOC== "PCR", DatPool$PCRvar,
+               ifelse(DatPool$AOC== "VIL", DatPool$VILvar,
+                       DatPool$REGvar))
+sapply(DatPool[, 29: 32], summary)
+```
 
     
             REGvar VILvar PCRvar   VAR
@@ -284,30 +228,32 @@ In two step, as for the average score.
     Max.     1.667  3.500 2.5000 3.500
 
 
-<a id="orgaf12fed"></a>
+<a id="org0db7604"></a>
 
 ## Summary Table
 
-    DatPool$WTPreg <- ifelse(DatPool$AOC== "REG", DatPool$WTP, NA)
-    DatPool$WTPvil <- ifelse(DatPool$AOC== "VIL", DatPool$WTP, NA)
-    DatPool$WTPpcr <- ifelse(DatPool$AOC== "PCR", DatPool$WTP, NA)
-    
-    DatPool$SCRreg <- ifelse(DatPool$AOC== "REG", DatPool$MEAN, NA)
-    DatPool$SCRvil <- ifelse(DatPool$AOC== "VIL", DatPool$MEAN, NA)
-    DatPool$SCRpcr <- ifelse(DatPool$AOC== "PCR", DatPool$MEAN, NA)
-    
-    DatPool$VARreg <- ifelse(DatPool$AOC== "REG", DatPool$VAR, NA)
-    DatPool$VARvil <- ifelse(DatPool$AOC== "VIL", DatPool$VAR, NA)
-    DatPool$VARpcr <- ifelse(DatPool$AOC== "PCR", DatPool$VAR, NA)
-    
-    library(stargazer)
-    ## stargazer(DatPool[, c("WTP", "WTPreg", "WTPvil", "WTPpcr",
-    ##                       "MEAN", "SCRreg", "SCRvil", "SCRpcr",
-    ##                       "VAR", "VARreg", "VARvil", "VARpcr")],
-    ##           type= "html", out= "Tables/TabSumStats.html")
-    stargazer(DatPool[, c("WTP", "WTPreg", "WTPvil", "WTPpcr",
-                          "MEAN", "SCRreg", "SCRvil", "SCRpcr",
-                          "VAR", "VARreg", "VARvil", "VARpcr")], type= "text")
+```R
+DatPool$WTPreg <- ifelse(DatPool$AOC== "REG", DatPool$WTP, NA)
+DatPool$WTPvil <- ifelse(DatPool$AOC== "VIL", DatPool$WTP, NA)
+DatPool$WTPpcr <- ifelse(DatPool$AOC== "PCR", DatPool$WTP, NA)
+
+DatPool$SCRreg <- ifelse(DatPool$AOC== "REG", DatPool$MEAN, NA)
+DatPool$SCRvil <- ifelse(DatPool$AOC== "VIL", DatPool$MEAN, NA)
+DatPool$SCRpcr <- ifelse(DatPool$AOC== "PCR", DatPool$MEAN, NA)
+
+DatPool$VARreg <- ifelse(DatPool$AOC== "REG", DatPool$VAR, NA)
+DatPool$VARvil <- ifelse(DatPool$AOC== "VIL", DatPool$VAR, NA)
+DatPool$VARpcr <- ifelse(DatPool$AOC== "PCR", DatPool$VAR, NA)
+
+library(stargazer)
+## stargazer(DatPool[, c("WTP", "WTPreg", "WTPvil", "WTPpcr",
+##                       "MEAN", "SCRreg", "SCRvil", "SCRpcr",
+##                       "VAR", "VARreg", "VARvil", "VARpcr")],
+##           type= "html", out= "Tables/TabSumStats.html")
+stargazer(DatPool[, c("WTP", "WTPreg", "WTPvil", "WTPpcr",
+                      "MEAN", "SCRreg", "SCRvil", "SCRpcr",
+                      "VAR", "VARreg", "VARvil", "VARpcr")], type= "text")
+```
 
     ==============================================================
     Statistic   N    Mean  St. Dev.  Min  Pctl(25) Pctl(75)  Max  
@@ -327,27 +273,29 @@ In two step, as for the average score.
     --------------------------------------------------------------
 
 
-<a id="org20d7ef0"></a>
+<a id="org849099e"></a>
 
 # Regression analysis
 
 
-<a id="org7af9522"></a>
+<a id="org3204826"></a>
 
 ## Table 2 of the paper
 
-    library(lfe) ; library(texreg)
-    m1 <- felm(WTP~ AOC | 0  | 0 | ID, data= DatPool)
-    m2 <- felm(WTP~ AOC | ID | 0 | ID, data= DatPool)
-    m3 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9+ VIN10 
-               | 0 | 0 | ID, data= DatPool)
-    m4 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9+ VIN10 
-               | ID | 0 | ID, data= DatPool)
-    m5 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9+ AOC 
-               | 0 | 0 | ID, data= DatPool)
-    m6 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9+ AOC 
-               | ID | 0 | ID, data= DatPool)
-    screenreg(list(m1, m2, m3, m4, m5, m6))
+```R
+library(lfe) ; library(texreg)
+m1 <- felm(WTP~ AOC | 0  | 0 | ID, data= DatPool)
+m2 <- felm(WTP~ AOC | ID | 0 | ID, data= DatPool)
+m3 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9+ VIN10 
+           | 0 | 0 | ID, data= DatPool)
+m4 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN5+ VIN7+ VIN8+ VIN9+ VIN10 
+           | ID | 0 | ID, data= DatPool)
+m5 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9+ AOC 
+           | 0 | 0 | ID, data= DatPool)
+m6 <- felm(WTP~ VIN0+ VIN1+ VIN2+ VIN3+ VIN4+ VIN7+ VIN8+ VIN9+ AOC 
+           | ID | 0 | ID, data= DatPool)
+screenreg(list(m1, m2, m3, m4, m5, m6))
+```
 
     ===================================================================================================
                            Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
@@ -388,21 +336,23 @@ In two step, as for the average score.
     *** p < 0.001, ** p < 0.01, * p < 0.05
 
 
-<a id="org3ad4113"></a>
+<a id="orgf3ed1be"></a>
 
 ## Table 3 of the paper
 
-    m1a <- felm(WTP~ MEAN+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
-    m1b <- felm(WTP~ MEAN+ VAR+ AOCPCR:VIN0 | ID | 0 | ID, data= DatPool)
-    m2a <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0 | 0 | 0 | ID, data= DatPool)
-    m2b <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0 | ID | 0 | ID, data= DatPool)
-    m3a <- felm(WTP~ AOC+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
-    m3b <- felm(WTP~ AOC+ VAR+ AOCPCR:VIN0| ID | 0 |ID, data= DatPool)
-    m4a <- felm(WTP~ AOC+ MEAN+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
-    m4b <- felm(WTP~ AOC+ MEAN+ VAR+ AOCPCR:VIN0| ID | 0 |ID, data= DatPool)
-    ## htmlreg(list(m1a, m1b, m2a, m2b, m4a, m4b), file= "Tables/Reg2A.xls",
-    ##         inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
-    screenreg(list(m1a, m1b, m2a, m2b, m4a, m4b))
+```R
+m1a <- felm(WTP~ MEAN+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
+m1b <- felm(WTP~ MEAN+ VAR+ AOCPCR:VIN0 | ID | 0 | ID, data= DatPool)
+m2a <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0 | 0 | 0 | ID, data= DatPool)
+m2b <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0 | ID | 0 | ID, data= DatPool)
+m3a <- felm(WTP~ AOC+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
+m3b <- felm(WTP~ AOC+ VAR+ AOCPCR:VIN0| ID | 0 |ID, data= DatPool)
+m4a <- felm(WTP~ AOC+ MEAN+ VAR+ AOCPCR:VIN0| 0 | 0 | ID, data= DatPool)
+m4b <- felm(WTP~ AOC+ MEAN+ VAR+ AOCPCR:VIN0| ID | 0 |ID, data= DatPool)
+## htmlreg(list(m1a, m1b, m2a, m2b, m4a, m4b), file= "Tables/Reg2A.xls",
+##         inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(m1a, m1b, m2a, m2b, m4a, m4b))
+```
 
     ===================================================================================================
                            Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
@@ -429,29 +379,31 @@ In two step, as for the average score.
     *** p < 0.001, ** p < 0.01, * p < 0.05
 
 
-<a id="org553d5ef"></a>
+<a id="org7641be6"></a>
 
 ## Table 4 of the paper
 
-    m3a <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:MEAN+ AOCPCR:VIN0
-                | 0 | 0 | ID, data= DatPool)
-    m3b <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:MEAN+ AOCPCR:VIN0
-                | ID | 0 | ID, data= DatPool)
-    m4a <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0
-                + AOCREG:VAR+ AOCVIL:VAR+ AOCPCR:VAR 
-                | 0 | 0 | ID, data= DatPool)
-    m4b <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0
-                + AOCREG:VAR+ AOCVIL:VAR+ AOCPCR:VAR 
-                | ID | 0 | ID, data= DatPool)
-    maa <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:VIN0
-                + AOCREG:VAR + AOCVIL:VAR+ AOCPCR:VAR
-                | 0 | 0 | ID, data= DatPool)
-    mbb <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:VIN0
-                + AOCREG:VAR + AOCVIL:VAR+ AOCPCR:VAR
-                | ID | 0 | ID, data= DatPool)
-    ## htmlreg(list(m3a, m3b, m4a, m4b, maa, mbb), file= "Tables/Reg3A.xls",
-    ##         inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
-    screenreg(list(m3a, m3b, m4a, m4b, maa, mbb))
+```R
+m3a <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:MEAN+ AOCPCR:VIN0
+            | 0 | 0 | ID, data= DatPool)
+m3b <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:MEAN+ AOCPCR:VIN0
+            | ID | 0 | ID, data= DatPool)
+m4a <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR+ AOCVIL:VAR+ AOCPCR:VAR 
+            | 0 | 0 | ID, data= DatPool)
+m4b <- felm(WTP~ AOC+ MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR+ AOCVIL:VAR+ AOCPCR:VAR 
+            | ID | 0 | ID, data= DatPool)
+maa <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR + AOCVIL:VAR+ AOCPCR:VAR
+            | 0 | 0 | ID, data= DatPool)
+mbb <- felm(WTP~ AOC+ AOCREG:MEAN+ AOCVIL:MEAN+ AOCPCR:VIN0
+            + AOCREG:VAR + AOCVIL:VAR+ AOCPCR:VAR
+            | ID | 0 | ID, data= DatPool)
+## htmlreg(list(m3a, m3b, m4a, m4b, maa, mbb), file= "Tables/Reg3A.xls",
+##         inline.css= F, doctype= T, html.tag= T, head.tag= T, body.tag= T)
+screenreg(list(m3a, m3b, m4a, m4b, maa, mbb))
+```
 
     ===================================================================================================
                            Model 1      Model 2      Model 3      Model 4      Model 5      Model 6    
@@ -488,144 +440,149 @@ In two step, as for the average score.
     *** p < 0.001, ** p < 0.01, * p < 0.05
 
 
-<a id="org523c45e"></a>
+<a id="orgbe199af"></a>
 
 # Figures
 
 
-<a id="org3251473"></a>
+<a id="orge106a1e"></a>
 
 ## Figure 1
 
-    DatPool$SR <- ifelse(DatPool$FIXIN!= 1, DatPool$STRUCT,
-                         paste0(as.numeric(substr(DatPool$STRUCT, 1, 1))- 1,
-                                substr(DatPool$STRUCT, 2, 5)))
-    gg <- data.frame(SR= DatPool$SR,
-                     model.matrix(~0+ DatPool$SR)/ 3)
-    hh <- aggregate(rep(1/ 3, nrow(gg)), by= list(gg$SR), sum)
-    hh <- data.frame(hh, as.numeric(substr(hh$Group.1, 1, 1)),
-                     as.numeric(substr(hh$Group.1, 3, 3)),
-                     as.numeric(substr(hh$Group.1, 5, 5)))
-    dpt <- list(as.numeric(hh[1, 3: 5]))
-    for (i in 2: nrow(hh)) dpt <- c(dpt, list(as.numeric(hh[i, 3: 5])))
-    library(Ternary)
-    par(mar= c(0, 0, 2, 0))
-    TernaryPlot(alab= '% PREMIER CRU -->', isometric= T,
-                blab= '% VILLAGE -->', clab= '<--  % REGIONAL',
-                grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
-                axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
-                main= "",
-                grid.minor.lines= 0, padding= .075)
-    Interest <- matrix(c( 40, 20, 40,
-                          40, 60, 00,
-                          00, 60, 40), ncol= 3, byrow= TRUE)
-    TernaryPolygon(Interest, col='#aaddfa', border='grey')
-    AddToTernary(text, dpt, hh$x, cex=1.2, font=2)
+```R
+DatPool$SR <- ifelse(DatPool$FIXIN!= 1, DatPool$STRUCT,
+                     paste0(as.numeric(substr(DatPool$STRUCT, 1, 1))- 1,
+                            substr(DatPool$STRUCT, 2, 5)))
+gg <- data.frame(SR= DatPool$SR,
+                 model.matrix(~0+ DatPool$SR)/ 3)
+hh <- aggregate(rep(1/ 3, nrow(gg)), by= list(gg$SR), sum)
+hh <- data.frame(hh, as.numeric(substr(hh$Group.1, 1, 1)),
+                 as.numeric(substr(hh$Group.1, 3, 3)),
+                 as.numeric(substr(hh$Group.1, 5, 5)))
+dpt <- list(as.numeric(hh[1, 3: 5]))
+for (i in 2: nrow(hh)) dpt <- c(dpt, list(as.numeric(hh[i, 3: 5])))
+library(Ternary)
+par(mar= c(0, 0, 2, 0))
+TernaryPlot(alab= '% PREMIER CRU -->', isometric= T,
+            blab= '% VILLAGE -->', clab= '<--  % REGIONAL',
+            grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
+            axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
+            main= "",
+            grid.minor.lines= 0, padding= .075)
+Interest <- matrix(c( 40, 20, 40,
+                      40, 60, 00,
+                      00, 60, 40), ncol= 3, byrow= TRUE)
+TernaryPolygon(Interest, col='#aaddfa', border='grey')
+AddToTernary(text, dpt, hh$x, cex=1.2, font=2)
+```
 
 <Figures/TriDistriB.pdf>
 
 
-<a id="orga3d83f5"></a>
+<a id="org1a1892c"></a>
 
 ## Figure 2
 
-    yop <- aggregate(DatPool$WTP,
-                     by= list(DatPool$AOC, DatPool$SR), mean)
-    names(yop) <- c("VIN", "SR", "ValP")
-    yap1 <- merge(yop[yop$VIN== "PCR", c("SR", "ValP")],
-                  yop[yop$VIN== "VIL", c("SR", "ValP")], by= "SR")
-    yap2 <- merge(yap1, yop[yop$VIN== "REG", c("SR", "ValP")], by= "SR")
-    yap2$PCR <- as.numeric(substr(yap2$SR, 1, 1))
-    yap2$VIL <- as.numeric(substr(yap2$SR, 3, 3))
-    yap2$REG <- as.numeric(substr(yap2$SR, 5, 5))
-    yup <- yap2[order(yap2$REG, yap2$VIL, yap2$PCR), ]
-    yup$ValT <- (yup$PCR* yup$ValP.x+
-                 yup$VIL* yup$ValP.y+ yup$REG* yap2$ValP)/ 10
-    # png(filename= "Figures/TriangleF2.png", 
-    #    units="in", width= 11, height= 9, pointsize= 12, res=300)
-    library(Ternary)
-    par(mfrow= c(2, 2), mar= c(0, 0, 3, 0))
-    TernZoom(yup$ValP, "Average WTP for a bottle at Régional level")
-    AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
-    TernZoom(yup$ValP.y, "AverageWTP of a bottle at Village level")
-    AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
-    TernZoom(yup$ValP.x, "Average WTP for a bottle at Premier Cru level")
-    AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
-    TernZoom(yup$ValT, "Average WTP for a average bottle on the area")
-    AddToTernary(points, c(0, 50, 50), pch=21, cex=6.5)
-    # dev.off()
+```R
+yop <- aggregate(DatPool$WTP,
+                 by= list(DatPool$AOC, DatPool$SR), mean)
+names(yop) <- c("VIN", "SR", "ValP")
+yap1 <- merge(yop[yop$VIN== "PCR", c("SR", "ValP")],
+              yop[yop$VIN== "VIL", c("SR", "ValP")], by= "SR")
+yap2 <- merge(yap1, yop[yop$VIN== "REG", c("SR", "ValP")], by= "SR")
+yap2$PCR <- as.numeric(substr(yap2$SR, 1, 1))
+yap2$VIL <- as.numeric(substr(yap2$SR, 3, 3))
+yap2$REG <- as.numeric(substr(yap2$SR, 5, 5))
+yup <- yap2[order(yap2$REG, yap2$VIL, yap2$PCR), ]
+yup$ValT <- (yup$PCR* yup$ValP.x+
+             yup$VIL* yup$ValP.y+ yup$REG* yap2$ValP)/ 10
+# png(filename= "Figures/TriangleF2.png", 
+#    units="in", width= 11, height= 9, pointsize= 12, res=300)
+library(Ternary)
+par(mfrow= c(2, 2), mar= c(0, 0, 3, 0))
+TernZoom(yup$ValP, "Average WTP for a bottle at Régional level")
+AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
+TernZoom(yup$ValP.y, "AverageWTP of a bottle at Village level")
+AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
+TernZoom(yup$ValP.x, "Average WTP for a bottle at Premier Cru level")
+AddToTernary(points, c(50, 25, 25), pch=21, cex=6.5)
+TernZoom(yup$ValT, "Average WTP for a average bottle on the area")
+AddToTernary(points, c(0, 50, 50), pch=21, cex=6.5)
+# dev.off()
+```
 
 <Figures/TriangleF2.pdf>
 
 
-<a id="org55d4934"></a>
+<a id="orgef2946d"></a>
 
 # Appendix
 
 
-<a id="orgc6c753c"></a>
+<a id="orgfa03308"></a>
 
 ## Function for ternary plots
 
-    TernZoom <- function(vecteur, lbl= ""){
-        dpt2 <- list(c(0  , 2.5, 7.5), c(2.5, 0  , 7.5),  c(0  , 5  , 5  ),
-                     c(2.5, 2.5, 5  ), c(5  , 0  , 5  ),  c(0  , 7.5, 2.5),
-                     c(2.5, 5  , 2.5), c(5  , 2.5, 2.5),  c(7.5, 0  , 2.5),
-                     c(0  , 10 , 0  ), c(2.5, 7.5, 0  ),  c(5  , 5  , 0  ),
-                     c(7.5, 2.5, 0  ), c(10 , 0 , 0  ))
-        TernaryPlot(alab= ' --> Percent of Premier Cru level --> ',
-                    blab= ' --> Percent of Village level --> ', col.lab= "red",
-                    clab= ' <-- Percent of Régional level <-- ', grid.lwd= 4,
-                    grid.lty='solid', col=rgb(.9, .9, .9), grid.col='white', 
-                    axis.col="white", ticks.col= "white", isometric= T,
-                    padding= 0.1, main= lbl, grid.minor.lines= 0,
-                    grid.line= 4,  axis.labels= F, point= 'down')
-        TernaryLines(list(c(100,   0,   0), c(-10, 115, 0)),
-                     lty= 3, lwd= 1.4, col= "chocolate1")
-        TernaryLines(list(c( 75,   0,  25), c(-10, 85, 25)),
-                     lty= 3, lwd= 1.4, col= "chocolate1")
-        TernaryLines(list(c( 50,   0,  50), c(-10, 60, 50)),
-                     lty= 3, lwd= 1.4, col= "chocolate1")
-        TernaryLines(list(c( 25,   0,  75), c(-10, 35, 75)),
-                     lty= 3, lwd= 1.4, col= "chocolate1")
-        TernaryLines(list(c(  0,   0, 100), c(-10, 10,100)),
-                     lty= 3, lwd= 1.4, col= "chocolate1")
-        AddToTernary(text, c(-10, 114, 0), 40, col= "chocolate1")
-        AddToTernary(text, c(-10, 85, 25), 30, col= "chocolate1")
-        AddToTernary(text, c(-10, 60, 50), 20, col= "chocolate1")
-        AddToTernary(text, c(-10, 35, 75), 10, col= "chocolate1")
-        AddToTernary(text, c(-10, 10,100),  0, col= "chocolate1")
-        TernaryLines(list(c(  0,  75,  25), c( 35, 75 , -10)),
-                     lty= 3, lwd= 1.4, col= "darkcyan")
-        TernaryLines(list(c( 0,  50,  50), c( 60, 50, -10)),
-                     lty= 3, lwd= 1.4, col= "darkcyan")
-        TernaryLines(list(c( 0,   25,  75), c(85, 25, -10)),
-                     lty= 3, lwd= 1.4, col= "darkcyan")
-        TernaryLines(list(c( 0,   0, 100), c(115, 0, -10)),
-                     lty= 3, lwd= 1.4, col= "darkcyan")
-        TernaryLines(list(c( 0, 100,  0),  c( 10, 100, -10)),
-                     lty= 3, lwd= 1.4, col= "darkcyan")
-        AddToTernary(text, c(10,100, -10), 20, col= "darkcyan")
-        AddToTernary(text, c(35, 75, -10), 30, col= "darkcyan")
-        AddToTernary(text, c(60, 50, -10), 40, col= "darkcyan")
-        AddToTernary(text, c(85, 25, -10), 50, col= "darkcyan")
-        AddToTernary(text, c(115, 0, -10), 60, col= "darkcyan")
-        TernaryLines(list(c(  0, 100,  0), c( 0, -10, 115)),
-                     lty= 3, lwd= 1.4, col= "blueviolet")
-        TernaryLines(list(c( 25,  75, 0), c( 25, -10, 85)),
-                     lty= 3, lwd= 1.4, col= "blueviolet")
-        TernaryLines(list(c( 50,  50,  0), c(50, -10, 60)),
-                     lty= 3, lwd= 1.4, col= "blueviolet")
-        TernaryLines(list(c( 75,  25, 0), c(75, -10, 35)),
-                     lty= 3, lwd= 1.4, col= "blueviolet")
-        TernaryLines(list(c(100,   0, 0), c(100, -10, 9.99)),
-                     lty= 3, lwd= 1.4, col= "blueviolet")
-        AddToTernary(text, c( 0,-10, 115), 40, col= "blueviolet")
-        AddToTernary(text, c(25,-10,  85), 30, col= "blueviolet")
-        AddToTernary(text, c(50,-10,  60), 20, col= "blueviolet")
-        AddToTernary(text, c(75,-10,  35), 10, col= "blueviolet")
-        AddToTernary(text, c(100,-10, 9.99), 0, col= "blueviolet")
-        AddToTernary(points, dpt2, pch= 21, col= 'white', bg= "white", cex=5)
-        AddToTernary(text, dpt2, round(vecteur, 1), cex=1.25, font=2)
-    }
-
+```R
+TernZoom <- function(vecteur, lbl= ""){
+    dpt2 <- list(c(0  , 2.5, 7.5), c(2.5, 0  , 7.5),  c(0  , 5  , 5  ),
+                 c(2.5, 2.5, 5  ), c(5  , 0  , 5  ),  c(0  , 7.5, 2.5),
+                 c(2.5, 5  , 2.5), c(5  , 2.5, 2.5),  c(7.5, 0  , 2.5),
+                 c(0  , 10 , 0  ), c(2.5, 7.5, 0  ),  c(5  , 5  , 0  ),
+                 c(7.5, 2.5, 0  ), c(10 , 0 , 0  ))
+    TernaryPlot(alab= ' --> Percent of Premier Cru level --> ',
+                blab= ' --> Percent of Village level --> ', col.lab= "red",
+                clab= ' <-- Percent of Régional level <-- ', grid.lwd= 4,
+                grid.lty='solid', col=rgb(.9, .9, .9), grid.col='white', 
+                axis.col="white", ticks.col= "white", isometric= T,
+                padding= 0.1, main= lbl, grid.minor.lines= 0,
+                grid.line= 4,  axis.labels= F, point= 'down')
+    TernaryLines(list(c(100,   0,   0), c(-10, 115, 0)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c( 75,   0,  25), c(-10, 85, 25)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c( 50,   0,  50), c(-10, 60, 50)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c( 25,   0,  75), c(-10, 35, 75)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    TernaryLines(list(c(  0,   0, 100), c(-10, 10,100)),
+                 lty= 3, lwd= 1.4, col= "chocolate1")
+    AddToTernary(text, c(-10, 114, 0), 40, col= "chocolate1")
+    AddToTernary(text, c(-10, 85, 25), 30, col= "chocolate1")
+    AddToTernary(text, c(-10, 60, 50), 20, col= "chocolate1")
+    AddToTernary(text, c(-10, 35, 75), 10, col= "chocolate1")
+    AddToTernary(text, c(-10, 10,100),  0, col= "chocolate1")
+    TernaryLines(list(c(  0,  75,  25), c( 35, 75 , -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0,  50,  50), c( 60, 50, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0,   25,  75), c(85, 25, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0,   0, 100), c(115, 0, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    TernaryLines(list(c( 0, 100,  0),  c( 10, 100, -10)),
+                 lty= 3, lwd= 1.4, col= "darkcyan")
+    AddToTernary(text, c(10,100, -10), 20, col= "darkcyan")
+    AddToTernary(text, c(35, 75, -10), 30, col= "darkcyan")
+    AddToTernary(text, c(60, 50, -10), 40, col= "darkcyan")
+    AddToTernary(text, c(85, 25, -10), 50, col= "darkcyan")
+    AddToTernary(text, c(115, 0, -10), 60, col= "darkcyan")
+    TernaryLines(list(c(  0, 100,  0), c( 0, -10, 115)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c( 25,  75, 0), c( 25, -10, 85)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c( 50,  50,  0), c(50, -10, 60)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c( 75,  25, 0), c(75, -10, 35)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    TernaryLines(list(c(100,   0, 0), c(100, -10, 9.99)),
+                 lty= 3, lwd= 1.4, col= "blueviolet")
+    AddToTernary(text, c( 0,-10, 115), 40, col= "blueviolet")
+    AddToTernary(text, c(25,-10,  85), 30, col= "blueviolet")
+    AddToTernary(text, c(50,-10,  60), 20, col= "blueviolet")
+    AddToTernary(text, c(75,-10,  35), 10, col= "blueviolet")
+    AddToTernary(text, c(100,-10, 9.99), 0, col= "blueviolet")
+    AddToTernary(points, dpt2, pch= 21, col= 'white', bg= "white", cex=5)
+    AddToTernary(text, dpt2, round(vecteur, 1), cex=1.25, font=2)
+}
+```

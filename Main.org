@@ -35,9 +35,9 @@
     the experimental protocol are on the [[https://data.inrae.fr/dataset.xhtml?persistentId=doi:XXX][Inrae dataverse server]].
 
     You will find here :
-    - The last [[file:WPfin.pdf][working paper]] and [[file:WPsoi.pdf][online appendix]]
+    - The last [[file:WorkingPaper.pdf][working paper]] and [[file:JWEsm.pdf][online appendix]]
     - The replication material in [[file:Replication.pdf][PDF]] and [[file:Replication.md][Markdown]]
-    - The details regarding [[./ENprotocol.pdf][experimental procedure]]
+    - The details regarding [[file:ENprotocol.pdf][experimental procedure]]
 
 *** Version Française
 
@@ -62,20 +62,12 @@
   :EXPORT_FILE_NAME:    Replication
   :EXPORT_LATEX_CLASS:  ManueStat
   :EXPORT_OPTIONS:      TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc toc:nil H:3
-  :EXPORT_TITLE:        @@latex: \huge Willingness-To-Pay for Reshuffling\\ Geographical Indications \vspace{1cm}@@
+  :EXPORT_TITLE:        @@latex: \vspace{-1.5cm} \huge Willingness-To-Pay for Reshuffling\\ Geographical Indications \vspace{1cm}@@
   :EXPORT_DATE:         @@latex: Replication Material V2.1, \today @@ 
   :EXPORT_AUTHOR:       @@latex:\begin{tabular}{ccc} Monia SAÏDI\footnote{UMR CESAER : AgroSup Dijon, INRAE, Univ. Bourgogne Franche-Comté, F-21000 Dijon.} &\hspace*{1.5cm}& Jean-Sauveur AY$^*$ \\  \url{monia.saidi@inrae.fr} && \url{jean-sauveur.ay@inrae.fr} \\ &&\\ Stéphan MARETTE\footnote{UMR ECOPUB : AgroParisTech, INRAE, Univ. Paris Saclay, F-75000 Paris.} && Christophe MARTIN\footnote{UMR CSGA : CNRS, INRAE, Univ. Bourgogne Franche-Comté, F-21000 Dijon.}\\ \url{stephan.marette@inrae.fr} && \url{christophe.martin@inrae.fr}\\ &&\end{tabular}@@
   :EXPORT_LATEX_HEADER: \newcommand{\verbatimfont}[1]{\renewcommand{\verbatim@font}{\ttfamily#1}} \usepackage[T1]{fontenc}\usepackage{tabularx, rotating, booktabs, lscape, tikz, dcolumn, amssymb, amsmath, amsthm, bbm, eurosym, threeparttable, pdflscape, txfonts, rotfloat}  \usepackage{tocloft} \usepackage[toc]{multitoc}\renewcommand*{\multicolumntoc}{2}\setlength{\columnseprule}{.5pt}\setlength{\columnsep}{1cm}
   :END:
 ** Abstract                                  :noheading:
-#+begin_export html
----
-title:  Willingness-To-Pay for Reshuffling Geographical Indications
-author: Monia Saïdi, Jean-Sauveur Ay, Stephan Marette, Christophe Martin
----
-
-# Abstract
-#+end_export
 #+BEGIN_abstract
 This file contents the Replication Material (RM) associated to the
 article named in the title and under revision in the /Journal of Wine
