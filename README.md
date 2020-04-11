@@ -1,6 +1,6 @@
 # English version
 
-This repo contains the material associated to the paper "Willingness-To-Pay for Reshuffling Geographical Indications" under revision in the *Journal of Wine Economics*. Raw data from the experimental protocol are on the [Inrae dataverse server](https://data.inrae.fr/dataset.xhtml?persistentId=doi:XXX).
+This repo contains the material associated to the paper "Willingness-To-Pay for Reshuffling Geographical Indications" under revision in the *Journal of Wine Economics*. Raw data from the experimental protocol are on the [Inrae dataverse server](https://data.inra.fr/dataset.xhtml?persistentId=doi:10.15454/5ICGGD).
 
 You will find here :
 
