@@ -6,7 +6,7 @@ You will find here :
 
 -   The last [working paper](WorkingPaper.pdf) and [online appendix](JWEsm.pdf)
 -   The replication material in [PDF](Replication.pdf) and [Markdown](Replication.md)
--   The details regarding [experimental procedure](ENprotocol.pdf)
+-   The details regarding [experimental protocol](ENprotocol.pdf)
 
 
 # Version Française

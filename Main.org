@@ -37,7 +37,7 @@
     You will find here :
     - The last [[file:WorkingPaper.pdf][working paper]] and [[file:JWEsm.pdf][online appendix]]
     - The replication material in [[file:Replication.pdf][PDF]] and [[file:Replication.md][Markdown]]
-    - The details regarding [[file:ENprotocol.pdf][experimental procedure]]
+    - The details regarding [[file:ENprotocol.pdf][experimental protocol]]
 
 *** Version Française
 
@@ -611,7 +611,7 @@ R^2 (proj model)     0.16         0.16         0.16         0.16         0.16   
 ** Figures
 *** Figure 1
 
-    Using the =ternary= package. 
+    Using the =Ternary= package. 
 
 #+Name:		Lst:TDB
 #+Header:	:width 7 :height 6
@@ -656,7 +656,7 @@ AddToTernary(text, dpt, hh$x, cex=1.2, font=2)
 #+Header:	:width 11 :height 9
 #+begin_src R :results graphics :file "Figures/TriangleF2.pdf"
 yop <- aggregate(DatPool$WTP,
-                 by= list(DatPool$AOC, DatPool$SR), mean)
+                 by= list(DatPool$AOC, DatPool$SR), mean, na.rm= TRUE)
 names(yop) <- c("VIN", "SR", "ValP")
 yap1 <- merge(yop[yop$VIN== "PCR", c("SR", "ValP")],
               yop[yop$VIN== "VIL", c("SR", "ValP")], by= "SR")
