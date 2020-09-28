@@ -1,39 +1,39 @@
 <div class="abstract">
-This file contents the Replication Material (RM) associated to the article named in the title and under revision in the *Journal of Wine Economics*. Data, code, figures, and tables are under the copyright license GNU GPL V3, which means that license notices must be preserved. Raw data are available from the Inrae dataverse server [https://data.inrae.fr](https://data.inra.fr/dataset.xhtml?persistentId=doi:10.15454/5ICGGD). The most recent version of this document and the detailed experimental protocol are available from the remote repository [https://github.com/jsay/reshufGI](https://github.com/jsay/reshufGI/).
+This file contents the Replication Material (RM) associated to the article named in the title published in the *Journal of Wine Economics*. Data, code, figures, and tables are under the copyright license GNU GPL V3, which means that license notices must be preserved. Raw data are available from the Inrae dataverse server [https://data.inrae.fr](https://data.inra.fr/dataset.xhtml?persistentId=doi:10.15454/5ICGGD). The most recent version of this document and the detailed experimental protocol are available from the remote repository [https://github.com/jsay/reshufGI](https://github.com/jsay/reshufGI/).
 
 </div>
 
 
 # Table of Contents
 
-1.  [Data preparation](#org284e67c)
-    1.  [Individual data](#org90888a3)
-    2.  [Scenario data](#org6a05ea3)
-    3.  [AOC variables](#orga04df3e)
-    4.  [Wine dummies](#org6be38f9)
-    5.  [Average score](#org7e70190)
-    6.  [Score variance](#orgf81e4e6)
-    7.  [Summary Table](#orgbeb77be)
-2.  [Regression analysis](#org66a7339)
-    1.  [Table SM1 cited in the paper](#org7946692)
-    2.  [Table SM2 cited in the paper](#org1ecfc2c)
-    3.  [Table SM3 cited in the paper](#org03c10ed)
-    4.  [Table 3 in the paper](#org5e46693)
-3.  [Figures](#org2c0f4ad)
-    1.  [Figure 1](#org9f8a2fa)
-    2.  [Figure 2 color](#orgd9d2323)
-    3.  [Figure 2 black and white](#orgc0ac3a5)
-4.  [Appendix](#orge8ec1d0)
-    1.  [Function for ternary plots](#orgedb4181)
-    2.  [Function for ternary plots black and white](#org09c254b)
+1.  [Data preparation](#orgbd664db)
+    1.  [Individual data](#orgd6cc6ea)
+    2.  [Scenario data](#org537e158)
+    3.  [AOC variables](#org8126a9b)
+    4.  [Wine dummies](#org6624b05)
+    5.  [Average score](#org225e2c8)
+    6.  [Score variance](#org47bdad5)
+    7.  [Summary Table](#orgb3bd98a)
+2.  [Regression analysis](#org90adc51)
+    1.  [Table SM1 cited in the paper](#org759ac44)
+    2.  [Table SM2 cited in the paper](#orgbf2ad1a)
+    3.  [Table SM3 cited in the paper](#org72ab711)
+    4.  [Table 3 in the paper](#orge8b0565)
+3.  [Figures](#orgca79849)
+    1.  [Figure 1](#orga43c899)
+    2.  [Figure 2 color](#orgb244c5f)
+    3.  [Figure 2 black and white](#org8701efd)
+4.  [Appendix](#org2969616)
+    1.  [Function for ternary plots](#org724bec7)
+    2.  [Function for ternary plots black and white](#org5877a89)
 
 
-<a id="org284e67c"></a>
+<a id="orgbd664db"></a>
 
 # Data preparation
 
 
-<a id="org90888a3"></a>
+<a id="orgd6cc6ea"></a>
 
 ## Individual data
 
@@ -69,7 +69,7 @@ LDT1$IDST <- paste(substr(LDT1$ID, 1, 3),
 These melted data contain the pooled WTP that are used in the regressions, as presented in the paper.
 
 
-<a id="org6a05ea3"></a>
+<a id="org537e158"></a>
 
 ## Scenario data
 
@@ -93,7 +93,7 @@ dim(DatPool <- merge(LDT1, SCC[, -1], by= "IDST"))
     [1] 1875    5
 
 
-<a id="orga04df3e"></a>
+<a id="org8126a9b"></a>
 
 ## AOC variables
 
@@ -117,7 +117,7 @@ sapply(DatPool[, c(7: 9, 13)], table, simplify= TRUE)
     1    625    625    625   975
 
 
-<a id="org6be38f9"></a>
+<a id="org6624b05"></a>
 
 ## Wine dummies
 
@@ -163,7 +163,7 @@ sapply(DatPool[, 14: 24], table)
     1  325  625  625  625  625  625  625  625  625  625   625
 
 
-<a id="org7e70190"></a>
+<a id="org225e2c8"></a>
 
 ## Average score
 
@@ -211,7 +211,7 @@ sapply(DatPool[, 25: 28], summary)
     Max.     1.500  6.500 10.000 10.000
 
 
-<a id="orgf81e4e6"></a>
+<a id="org47bdad5"></a>
 
 ## Score variance
 
@@ -245,7 +245,7 @@ sapply(DatPool[, 29: 32], summary)
     Max.     1.667  3.500 2.5000 3.500
 
 
-<a id="orgbeb77be"></a>
+<a id="orgb3bd98a"></a>
 
 ## Summary Table
 
@@ -295,12 +295,12 @@ stargazer(DatPool[, c("WTP", "WTPreg", "WTPvil", "WTPpcr",
     --------------------------------------------------------------
 
 
-<a id="org66a7339"></a>
+<a id="org90adc51"></a>
 
 # Regression analysis
 
 
-<a id="org7946692"></a>
+<a id="org759ac44"></a>
 
 ## Table SM1 cited in the paper
 
@@ -358,7 +358,7 @@ screenreg(list(m1, m2, m3, m4, m5, m6))
     *** p < 0.001, ** p < 0.01, * p < 0.05
 
 
-<a id="org1ecfc2c"></a>
+<a id="orgbf2ad1a"></a>
 
 ## Table SM2 cited in the paper
 
@@ -401,7 +401,7 @@ screenreg(list(m1a, m1b, m2a, m2b, m4a, m4b))
     *** p < 0.001, ** p < 0.01, * p < 0.05
 
 
-<a id="org03c10ed"></a>
+<a id="org72ab711"></a>
 
 ## Table SM3 cited in the paper
 
@@ -462,7 +462,7 @@ screenreg(list(m5a, m5b, m6a, m6b, maa, mbb))
     *** p < 0.001, ** p < 0.01, * p < 0.05
 
 
-<a id="org5e46693"></a>
+<a id="orge8b0565"></a>
 
 ## Table 3 in the paper
 
@@ -508,12 +508,12 @@ screenreg(list(m1, m5, m1a, m4a, m5a, maa), omit= "VIN")
     *** p < 0.001, ** p < 0.01, * p < 0.05
 
 
-<a id="org2c0f4ad"></a>
+<a id="orgca79849"></a>
 
 # Figures
 
 
-<a id="org9f8a2fa"></a>
+<a id="orga43c899"></a>
 
 ## Figure 1
 
@@ -549,7 +549,7 @@ AddToTernary(text, dpt, hh$x, cex=1.2, font=2)
 <Figures/TriDistriB.pdf>
 
 
-<a id="orgd9d2323"></a>
+<a id="orgb244c5f"></a>
 
 ## Figure 2 color
 
@@ -585,7 +585,7 @@ AddToTernary(points, c(0, 50, 50), pch=21, cex=6.5)
 <Figures/TriangleF2.pdf>
 
 
-<a id="orgc0ac3a5"></a>
+<a id="org8701efd"></a>
 
 ## Figure 2 black and white
 
@@ -607,12 +607,12 @@ AddToTernary(points, c(0, 50, 50), pch=21, cex=6.5)
 <Figures/TriangleF3.pdf>
 
 
-<a id="orge8ec1d0"></a>
+<a id="org2969616"></a>
 
 # Appendix
 
 
-<a id="orgedb4181"></a>
+<a id="org724bec7"></a>
 
 ## Function for ternary plots
 
@@ -681,7 +681,7 @@ TernZoom <- function(vecteur, lbl= ""){
 ```
 
 
-<a id="org09c254b"></a>
+<a id="org5877a89"></a>
 
 ## Function for ternary plots black and white
 

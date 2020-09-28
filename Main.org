@@ -29,13 +29,14 @@
   :END:
 *** English version
 
-    This repo contains the material associated to the paper
+    This repository contains the material associated to the paper
     "Willingness-To-Pay for Reshuffling Geographical Indications"
-    under revision in the /Journal of Wine Economics/.  Raw data from
-    the experimental protocol are on the [[https://data.inra.fr/dataset.xhtml?persistentId=doi:10.15454/5ICGGD][Inrae dataverse server]].
+    /Journal of Wine Economics/ Volume 15, Number 1, 2020, Pages
+    95–111, doi:10.1017/jwe.2020.5.  Raw data from the experimental
+    protocol can be downloaded from the [[https://data.inra.fr/dataset.xhtml?persistentId=doi:10.15454/5ICGGD][Inrae dataverse server]].
 
     You will find here :
-    - The last [[file:WorkingPaper.pdf][working paper]] and [[file:JWEsm.pdf][online appendix]]
+    - The last [[file:WorkingPaper.pdf][working paper]] and the [[file:JWEsm.pdf][online appendix]]
     - The replication material in [[file:Replication.pdf][PDF]] and [[file:Replication.md][Markdown]]
     - The details regarding [[file:ENprotocol.pdf][experimental protocol]]
 
@@ -51,8 +52,8 @@
     Made on =emacs= with =org-mode= to juggle with =R=, =LaTex= and
     =Markdown=.
 
-    Special thanks to my co-authors [[https://www.dijon.inrae.fr/cesaer/membres/monia-saidi/][Monia Saïdi]], [[https://www.versailles-grignon.inrae.fr/economie_publique_eng/PersonalPages2/Stephan-Marette][Stephan Marette]], and
-    [[https://www.researchgate.net/profile/Christophe_Martin][Christophe Martin]] for their contribution to this work.
+    Special thanks [[https://www.dijon.inrae.fr/cesaer/membres/monia-saidi/][Monia Saïdi]], [[https://www.versailles-grignon.inrae.fr/economie_publique_eng/PersonalPages2/Stephan-Marette][Stephan Marette]], and [[https://www.researchgate.net/profile/Christophe_Martin][Christophe Martin]]
+    for their contribution to this work.
 
     Licence GNU GPL V3, copyright and licence notices must be
     preserved (see https://www.gnu.org/licenses/gpl-3.0.en.html)
@@ -70,7 +71,7 @@
 ** Abstract                                  :noheading:
 #+BEGIN_abstract
 This file contents the Replication Material (RM) associated to the
-article named in the title and under revision in the /Journal of Wine
+article named in the title published in the /Journal of Wine
 Economics/.  Data, code, figures, and tables are under the copyright
 license GNU GPL V3, which means that license notices must be
 preserved.  Raw data are available from the Inrae dataverse server
